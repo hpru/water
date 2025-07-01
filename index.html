@@ -320,8 +320,13 @@
       top: 0;
     }
     
+    /* NEW CSS for red strikethrough */
+    .red-strike {
+      color: red !important; /* Force red color */
+      text-decoration: line-through !important; /* Force strikethrough */
+    }
+
     tr.ended {
-      text-decoration: line-through;
       color: #888;
       background-color: #f8f9fa;
     }
@@ -340,7 +345,7 @@
     
     tr.emergency.ended {
       background-color: #ffebee;
-      color: #d32f2f;
+      color: #d32f2f; /* Keep original red for ended emergency row */
     }
     
     tr:hover {
@@ -611,18 +616,18 @@
     function showTodayPerson() {
       const now = new Date();
       let today = new Date();
-      if (now.getHours() >= 17) today.setDate(today.getDate() + 1);
+      // If current time is past 5 PM, consider the "current day" for display as the next day's schedule
+      if (now.getHours() >= 17) {
+        today.setDate(today.getDate() + 1);
+      }
       const day = today.getDate();
-      let currentPerson = "يوم طوارئ";
+      let currentPerson = "";
+
       if (emergencyDays.includes(day)) {
-        if (now.getHours() >= 17 && now.getHours() < 24) {
-          currentPerson = "يوم طوارئ (من 5:00 مساءً حتى 12:00 منتصف الليل)";
-        } else {
-          currentPerson = "انتهت يتم الآن تجهيز الخزان ومراجعة الكاميرات";
-        }
+          currentPerson = "يوم طوارئ";
       } else {
-        const realDay = day - emergencyDays.filter(d => d < day).length;
-        currentPerson = people[(realDay - 1) % people.length];
+          const realDay = day - emergencyDays.filter(d => d < day).length;
+          currentPerson = people[(realDay - 1) % people.length];
       }
       document.getElementById('currentPerson').textContent = currentPerson;
     }
@@ -656,12 +661,40 @@
       document.getElementById('remainingTime').textContent = `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
     }
 
-    function getDayStatus(date, day) {
+    function getDayStatus(date) {
       const now = new Date();
-      const currentHour = now.getHours();
-      const actualToday = currentHour >= 17 ? now.getDate() + 1 : now.getDate();
-      if (day === actualToday) return "current";
-      if (day < actualToday) return "ended";
+      const currentDay = now.getDate();
+      const currentMonth = now.getMonth();
+      const currentYear = now.getFullYear();
+      const targetDay = date.getDate();
+      const targetMonth = date.getMonth();
+      const targetYear = date.getFullYear();
+
+      // Check if the target date is in the past
+      if (targetYear < currentYear || 
+         (targetYear === currentYear && targetMonth < currentMonth) || 
+         (targetYear === currentYear && targetMonth === currentMonth && targetDay < currentDay)) {
+        return "ended";
+      }
+
+      // Check if it's today's scheduled day
+      if (targetYear === currentYear && targetMonth === currentMonth && targetDay === currentDay) {
+        if (now.getHours() >= 17) { // If it's past 5 PM on the current day, it's considered "ended" for today's entry
+          return "ended";
+        }
+        return "current";
+      }
+      
+      // Check if it's the next day's schedule (if current hour is past 5 PM today)
+      const nextDay = new Date(now);
+      nextDay.setDate(now.getDate() + 1);
+      if (now.getHours() >= 17 && 
+          targetYear === nextDay.getFullYear() && 
+          targetMonth === nextDay.getMonth() && 
+          targetDay === nextDay.getDate()) {
+        return "current";
+      }
+
       return "normal";
     }
 
@@ -673,60 +706,73 @@
     function generateSchedule() {
       const today = new Date();
       const year = today.getFullYear();
-      const month = today.getMonth() + 1;
-      const daysInMonth = new Date(year, month, 0).getDate();
+      const month = today.getMonth(); // 0-indexed month
+      const daysInMonth = new Date(year, month + 1, 0).getDate(); // Get days in current month
       const tbody = document.getElementById('scheduleBody');
       tbody.innerHTML = '';
       let personIndex = 0;
-      if (daysInMonth >= 30 && !emergencyDays.includes(30)) {
-        emergencyDays.push(30);
-        emergencyDays.sort((a, b) => a - b);
-      }
       
+      // Ensure emergencyDays are within the current month's bounds
+      let currentMonthEmergencyDays = emergencyDays.filter(day => day <= daysInMonth);
+
       for (let day = 1; day <= daysInMonth; day++) {
-        const date = new Date(year, month - 1, day);
+        const date = new Date(year, month, day);
         const row = document.createElement('tr');
-        const dayStatus = getDayStatus(date, day);
+        const dayStatus = getDayStatus(date);
         
-        if (emergencyDays.includes(day)) {
-          // يوم طوارئ
-          row.classList.add('emergency');
-          
-          let noteText = "يوم طوارئ";
-          if (dayStatus === "ended") {
-            row.classList.add('ended');
-            noteText = "انتهت";
-          } else if (dayStatus === "current") {
-            row.classList.add('current');
-            noteText = "يوم طوارئ (جاري التنفيذ)";
-          }
-          
-          row.innerHTML = `
-            <td>${getDayName(date)}</td>
-            <td>${date.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric', numberingSystem: 'latn' })}</td>
-            <td>يوم طوارئ</td>
-            <td>${noteText}</td>
-          `;
+        const isEmergencyDay = currentMonthEmergencyDays.includes(day);
+
+        let personOrEmergencyContent = '';
+        let noteText = '';
+
+        if (isEmergencyDay) {
+            personOrEmergencyContent = 'يوم طوارئ';
+            if (dayStatus === "ended") {
+                noteText = '<span class="red-strike">انتهت</span>';
+            } else if (dayStatus === "current") {
+                noteText = 'يوم طوارئ (جاري التنفيذ)';
+            } else {
+                noteText = 'يوم طوارئ';
+            }
         } else {
-          // يوم عادي
-          const personName = people[personIndex++ % people.length];
-          let noteText = "-";
-          
-          if (dayStatus === "ended") {
-            row.classList.add('ended');
-            noteText = "انتهت";
-          } else if (dayStatus === "current") {
-            row.classList.add('current');
-            noteText = "يستقي الآن";
-          }
-          
-          row.innerHTML = `
-            <td>${getDayName(date)}</td>
-            <td>${date.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric', numberingSystem: 'latn' })}</td>
-            <td>${personName}</td>
-            <td>${noteText}</td>
-          `;
+            // Calculate personIndex skipping emergency days
+            const adjustedDay = day - currentMonthEmergencyDays.filter(d => d < day).length;
+            const personName = people[(adjustedDay - 1) % people.length];
+            
+            if (dayStatus === "ended") {
+                personOrEmergencyContent = `<span class="red-strike">${personName}</span>`;
+                noteText = '<span class="red-strike">انتهت</span>';
+            } else {
+                personOrEmergencyContent = personName;
+                if (dayStatus === "current") {
+                    noteText = 'يستقي الآن';
+                } else {
+                    noteText = '-';
+                }
+            }
         }
+        
+        // Apply row classes based on status
+        if (dayStatus === "ended") {
+            row.classList.add('ended');
+            if (isEmergencyDay) {
+                row.classList.add('emergency'); // Add emergency class even if ended for background color
+            }
+        } else if (dayStatus === "current") {
+            row.classList.add('current');
+            if (isEmergencyDay) {
+                row.classList.add('emergency'); // Add emergency class even if current for background color
+            }
+        } else if (isEmergencyDay) {
+            row.classList.add('emergency');
+        }
+
+        row.innerHTML = `
+          <td>${getDayName(date)}</td>
+          <td>${date.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric', numberingSystem: 'latn' })}</td>
+          <td>${personOrEmergencyContent}</td>
+          <td>${noteText}</td>
+        `;
         
         tbody.appendChild(row);
       }
@@ -740,6 +786,7 @@
       setInterval(updatePumpStatus, 60000);
       setInterval(updateRemainingTime, 1000);
       setInterval(showTodayPerson, 60000);
+      setInterval(generateSchedule, 60000); // Refresh schedule periodically to update 'ended' status
     };
   </script>
 </body>
