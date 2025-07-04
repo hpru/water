@@ -497,11 +497,8 @@
     const TOTAL_TANK_VOLUME_LITERS = TANK_VOLUME_CUBIC_METERS * 1000;
     const apiUrl = "https://script.google.com/macros/s/AKfycbzVB7uPTsNbotACV0aWTb7Y37wsI47BwCVbz_l4kitBgOBv9r_wTQJQGGWfjyGMU4ky/exec";
 
-    // دالة لتصحيح النسبة
-    function correctPercentage(raw) {
-      const maxSensorValue = 94;
-      return Math.min(100, (raw / maxSensorValue) * 100);
-    }
+    // ❌ تم حذف دالة correctPercentage() بالكامل بناءً على طلبك.
+    //    الآن، ستُعرض القيمة الخام من المستشعر مباشرةً.
 
     function fetchWaterData() {
       fetch(apiUrl)
@@ -510,13 +507,12 @@
           return res.json();
         })
         .then(data => {
-          const percentRaw = parseFloat(data.percent) || 0;
-          const percentCorrected = correctPercentage(percentRaw);
+          const percentRaw = parseFloat(data.percent) || 0; // 👈🏻 نستخدم القيمة الخام مباشرةً
           let updated = data.lastUpdated || "غير معروف";
-          const currentLiters = (percentCorrected / 100) * TOTAL_TANK_VOLUME_LITERS;
+          const currentLiters = (percentRaw / 100) * TOTAL_TANK_VOLUME_LITERS; // 👈🏻 حساب اللترات بناءً على القيمة الخام
 
-          document.getElementById("waterLevel").style.height = percentCorrected.toFixed(2) + "%";
-          document.getElementById("percentDisplay").textContent = `النسبة الحالية: ${percentCorrected.toFixed(2)}%`;
+          document.getElementById("waterLevel").style.height = percentRaw.toFixed(2) + "%";
+          document.getElementById("percentDisplay").textContent = `النسبة الحالية: ${percentRaw.toFixed(2)}%`;
           document.getElementById("litersDisplay").textContent = `الكمية الحالية: ${currentLiters.toFixed(2)} لتر`;
 
           // --- عرض وقت التحديث ---
@@ -560,15 +556,15 @@
 
           const warning = document.getElementById("warningMessage");
           const indicator = document.getElementById("statusIndicator");
-          if (percentCorrected >= 75) {
+          if (percentRaw >= 75) { // 👈🏻 الشروط بناءً على القيمة الخام
             indicator.textContent = "المستوى مرتفع";
             indicator.className = "data-display status-indicator high-level";
             warning.textContent = "";
-          } else if (percentCorrected >= 25 && percentCorrected < 75) {
+          } else if (percentRaw >= 25 && percentRaw < 75) { // 👈🏻 الشروط بناءً على القيمة الخام
             indicator.textContent = "المستوى متوسط";
             indicator.className = "data-display status-indicator medium-level";
             warning.textContent = "";
-          } else {
+          } else { // 👈🏻 الشروط بناءً على القيمة الخام
             indicator.textContent = "المستوى منخفض";
             indicator.className = "data-display status-indicator low-level";
             warning.textContent = "! مستوى الماء منخفض جدًا - الرجاء التعبئة";
@@ -709,7 +705,8 @@
           `;
         } else {
           // يوم عادي
-          const personName = people[personIndex++ % people.length];
+          // هذه هي الطريقة التي كانت تحسب بها personIndex في الكود الأصلي الخاص بك
+          const personName = people[personIndex++ % people.length]; 
           let noteText = "-";
           
           if (dayStatus === "ended") {
