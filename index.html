@@ -1,4 +1,22 @@
-<!DOCTYPE html>
+<!-- بداية التنبيه -->
+<div style="
+  background-color:#ff1a1a; 
+  color:white; 
+  font-weight:bold; 
+  text-align:center; 
+  padding:25px; 
+  font-size:28px; 
+  border-radius:8px; 
+  box-shadow:0 0 15px #ff0000;
+  font-family:Arial, sans-serif;
+">
+  ⚠️⚠️⚠️ <span style="font-size:32px;">تنبيه مهم!</span> ⚠️⚠️⚠️<br><br>
+  لقد انسحبت تمامًا من مشروع <strong>السقيا</strong>.<br>
+  شكرًا لكم، <strong>استمروا على هذا الجدول لمتابعة السقيا</strong>.<br>
+  <strong>رجاءً عدم التواصل معي نهائيًا.</strong><br><br>
+  <span style="font-size:32px;">⚠️🔴⭐⚠️🔴⭐⚠️</span>
+</div>
+<!-- نهاية التنبيه --><!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -338,28 +356,9 @@
 <body>
   <div class="container">
     <div class="header">
-      <h2>مستوى الماء في الخزان</h2>
-    </div>
-    <div class="dashboard">
-      <div class="tank-section">
-        <div class="tank-container">
-          <img src=" https://i.postimg.cc/d0jvThnd/file-0000000089fc6246b605b17eb2fbc278-2.png " alt="خزان ماء" class="tank-image">
-          <div class="water-level" id="waterLevel"></div>
-        </div>
-        <div class="data-display" id="percentDisplay">جارٍ التحميل...</div>
-        <div class="data-display" id="litersDisplay"></div>
-        <div class="update-time" id="updateTime"></div>
-        <div class="data-display" id="statusIndicator"></div>
-        <div id="warningMessage"></div>
-      </div>
-      <div class="tank-section">
-        <div class="sensor-note">
-          <p><strong>ملاحظة هامة:</strong> قد تظهر بعض القراءات غير الدقيقة لمستوى الماء أحيانًا بسبب تأثير الرطوبة على مستشعر الألتراسونيك.</p>
-          <p>للحصول على أدق قراءة، يرجى <strong>تحديث الصفحة عدة مرات</strong> (كل 1-2 دقيقة) وملاحظة القراءات المستقرة. هذا يساعد في تجاوز أي قراءات لحظية خاطئة.</p>
-        </div>
-        <div class="pump-container">
-          <h1>حالة تشغيل الغطاس</h1>
-          <div id="pumpStatus" class="status closed">جارٍ التحميل...</div>
+   
+    
+          <p>
         </div>
       </div>
     </div>
@@ -413,23 +412,6 @@
       </div>
       <ul>
         <li>مدة السقيا في حالة الطوارئ لا تتجاوز <strong>ساعة واحدة فقط</strong></li>
-        <li>يجب التواصل المسبق مع المسؤول لتنسيق الاستخدام</li>
-        <li>لا يتم منح أكثر من يوم طوارئ إلا بعد التأكد من الحاجة الحقيقية</li>
-        <li>أي تجاوز أو تلاعب يتم استبعاده مباشرة ودون تنبيه</li>
-      </ul>
-      <p><strong>للتواصل بخصوص أيام الطوارئ:</strong></p>
-    </div>
-    <div class="terms-box">
-      <h2>شروط استخدام السقيا:</h2>
-      <ul>
-        <li><strong>يُمنع تبديل الأدوار:</strong> كل شخص يلتزم بدوره المحدد، ولا يُسمح بأخذ أو منح الدور لأي شخص آخر.</li>
-        <li><strong>السقيا مخصصة فقط لصاحب الدور:</strong> لا يُسمح بإعطاء السقيا لشخص آخر أو استلامها نيابة عن أحد.</li>
-        <li><strong>الماء المتبقي:</strong> يجب ترك الماء المتبقي في الخزان ليستفيد منه الشخص التالي، ولا يتم تصريفه لأي استخدام آخر.</li>
-        <li><strong>تشغيل وإيقاف المحبس مسؤولية كل شخص بنفسه:</strong> أنت المسؤول الوحيد عن تشغيل وإيقاف المحبس الخاص بك، ولا تتواصل معي لطلب تشغيله أو إيقافه. من يزعجني بهذا الطلب سيتم حذفه دون رد.</li>
-        <li><strong>متابعة وصيانة الليات:</strong> كل شخص مسؤول عن متابعة وصيانة الليات الخاصة به، والتأكد من عدم وجود تسريب أو تلف. من يُهمل أو يُهدر الماء سيتم استبعاده.</li>
-        <li><strong>السقيا مجانية بالكامل:</strong> يتم توزيع الماء مجانًا، ويُمنع منعًا باتًا بيعه. ومن يثبت عليه بيع الماء سيتم استبعاده نهائيًا من السقيا.</li>
-        <li><strong>الالتزام بالمدة المحددة في الطوارئ:</strong> في أوقات الطوارئ، يجب الالتزام الصارم بالمدة المحددة للسقيا. أي تجاوز سيتم التعامل معه تلقائيًا، والاستبعاد سيكون فوريًا بدون تدخل بشري.</li>
-      </ul>
     </div>
   </div>
 
@@ -442,84 +424,13 @@
     const apiUrl = "https://script.google.com/macros/s/AKfycbzVB7uPTsNbotACV0aWTb7Y37wsI47BwCVbz_l4kitBgOBv9r_wTQJQGGWfjyGMU4ky/exec ";
 
     function fetchWaterData() {
-      fetch(apiUrl)
-        .then(res => {
-          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-          return res.json();
-        })
-        .then(data => {
-          const percentValueFromSheet = parseFloat(data.percent) || 0;
-          let updated = data.lastUpdated || "غير معروف";
-          const currentLiters = (percentValueFromSheet / 100) * TOTAL_TANK_VOLUME_LITERS;
-
-          document.getElementById("waterLevel").style.height = percentValueFromSheet.toFixed(2) + "%";
-          document.getElementById("percentDisplay").textContent = `النسبة الحالية: ${percentValueFromSheet.toFixed(2)}%`;
-          document.getElementById("litersDisplay").textContent = `الكمية الحالية: ${currentLiters.toFixed(2)} لتر`;
-
-          const now = new Date();
-          let displayTimeText;
-          if (updated.includes("1899") || updated.includes("Dec 30 1899")) {
-            const currentHour = now.getHours().toString().padStart(2, '0');
-            const currentMinute = now.getMinutes().toString().padStart(2, '0');
-            const currentSecond = now.getSeconds().toString().padStart(2, '0');
-            displayTimeText = `آخر تحديث: الآن (${currentHour}:${currentMinute}:${currentSecond})`;
-          } else {
-            try {
-              const lastUpdateTime = new Date(updated);
-              if (isNaN(lastUpdateTime.getTime())) {
-                displayTimeText = `آخر تحديث: ${updated} (تاريخ غير مفهوم)`;
-              } else {
-                const diffMilliseconds = now - lastUpdateTime;
-                const seconds = Math.floor(diffMilliseconds / 1000);
-                const minutes = Math.floor(seconds / 60);
-                const hours = Math.floor(minutes / 60);
-                const days = Math.floor(hours / 24);
-                let timeAgoText = "منذ لحظات";
-                if (seconds > 0 && seconds < 60) {
-                  timeAgoText = `منذ ${seconds} ثانية`;
-                } else if (minutes >= 1 && minutes < 60) {
-                  timeAgoText = `منذ ${minutes} دقيقة`;
-                } else if (hours >= 1 && hours < 24) {
-                  timeAgoText = `منذ ${hours} ساعة`;
-                } else if (days >= 1) {
-                  timeAgoText = `منذ ${days} يوم`;
-                }
-                displayTimeText = `آخر تحديث: ${updated} (${timeAgoText})`;
-              }
-            } catch (e) {
-              console.warn("Could not parse date for 'time ago' calculation:", updated, e);
-              displayTimeText = `آخر تحديث: ${updated} (خطأ في الوقت)`;
-            }
-          }
-          document.getElementById("updateTime").textContent = displayTimeText;
-
-          const warning = document.getElementById("warningMessage");
-          const indicator = document.getElementById("statusIndicator");
-
-          if (percentValueFromSheet >= 75) {
-            indicator.textContent = "";
-            indicator.className = "data-display status-indicator high-level";
-            warning.textContent = "";
-          } else if (percentValueFromSheet >= 25 && percentValueFromSheet < 75) {
-            indicator.textContent = "";
-            indicator.className = "data-display status-indicator medium-level";
-            warning.textContent = "";
-          } else {
-            indicator.textContent = "";
-            indicator.className = "data-display status-indicator low-level";
-            warning.textContent = "! مستوى الماء منخفض جدًا.";
-          }
-        })
-        .catch(err => {
-          console.error("Error fetching data:", err);
-          document.getElementById("percentDisplay").textContent = "تعذر تحميل البيانات";
-          document.getElementById("litersDisplay").textContent = "";
-          document.getElementById("updateTime").textContent = "تحقق من الاتصال أو الرابط.";
-        });
+      // هذه الدالة لم تعد بحاجة لتشغيل أي شيء، لكن يمكن تركها لتجنب الأخطاء
+      console.log("Water data fetching function is no longer active.");
     }
 
-    fetchWaterData();
-    setInterval(fetchWaterData, 60000);
+    // تم تعطيل استدعاء fetchWaterData و setInterval الخاص بها
+    // fetchWaterData();
+    // setInterval(fetchWaterData, 60000);
 
     const people = [
       "مفرح عمضان", "محمد عمضان", "مفرح جابر", "يحيى بن جابر", "علي يحيى",
@@ -536,13 +447,14 @@
       const now = new Date();
       let h = now.getHours(), m = now.getMinutes();
       const el = document.getElementById("pumpStatus");
-
-      if ((h > 17 && h < 21) || (h === 17 && m >= 0) || (h === 21 && m === 0)) {
-        el.textContent = "الغطاس الآن مفتوح، حتى الساعة 9:00 مساءً";
-        el.className = "status open";
-      } else {
-        el.textContent = "الغطاس الآن مغلق، سيتم التشغيل الساعة 5:00 مساءً";
-        el.className = "status closed";
+      if (el) { // تأكد من وجود العنصر قبل محاولة التعديل عليه
+        if ((h > 17 && h < 21) || (h === 17 && m >= 0) || (h === 21 && m === 0)) {
+          el.textContent = "الغطاس الآن مفتوح، حتى الساعة 9:00 مساءً";
+          el.className = "status open";
+        } else {
+          el.textContent = "الغطاس الآن مغلق، سيتم التشغيل الساعة 5:00 مساءً";
+          el.className = "status closed";
+        }
       }
     }
 
@@ -694,12 +606,12 @@
     }
 
     window.onload = function () {
-      updatePumpStatus();
+      // تم حذف استدعاء updatePumpStatus();
       generateSchedule();
       showTodayPerson();
       updateRemainingTime();
 
-      setInterval(updatePumpStatus, 60000);
+      // تم حذف setInterval(updatePumpStatus, 60000);
       setInterval(updateRemainingTime, 1000);
       setInterval(generateSchedule, 60 * 60 * 1000);
     };
