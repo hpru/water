@@ -395,7 +395,7 @@
 <body>
 
     <div class="card-container">
-        <h1>جدول سقاية الماء</h1>
+        <h1></h1>
         
         <div class="person-box">
             سَقْوُهُ اليوم: <span id="currentPerson" class="person-name">جارٍ التحديد...</span>
@@ -407,48 +407,8 @@
             </div>
             <div class="countdown-label">الوقت المتبقي </div>
         </div>
-    </div>
-
-    <div class="card-container">
-        <table id="scheduleTable">
-          <thead>
-            <tr>
-              <th>اليوم</th>
-              <th>التاريخ الميلادي</th>
-              <th>اسم الشخص</th>
-              <th>ملاحظة</th>
-            </tr>
-          </thead>
-          <tbody id="scheduleBody"></tbody>
-        </table>
-    </div>
-
-    <div class="card-container policy-box">
-        <h2>المؤهلون لأيام الطوارئ</h2>
-        <p>الأشخاص المذكورون في الجدول أدناه فقط هم المؤهلون لاستخدام أيام الطوارئ.</p>
-        <h2>جدول المؤهلين لأيام الطوارئ</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>الاسم</th>
-              <th>مدة السقيا</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>1</td><td>يحيى جابر</td><td>1 ساعة</td></tr>
-            <tr><td>2</td><td>عبدالله محمد جابر</td><td>1 ساعة</td></tr>
-            <tr><td>3</td><td>خزانات الجيران في الحي</td><td>1 ساعة</td></tr>
-          </tbody>
-        </table>
-        <div class="policy">
-          <br>
-          <ul>
-            <li>مدة السقيا في حالة الطوارئ لا تتجاوز <strong>ساعة واحدة فقط</strong></li>
-            <li>لا يتم منح أكثر من يوم طوارئ إلا بعد التأكد من الحاجة الحقيقية</li>
-            <li>أي تجاوز أو تلاعب يتم استبعاده مباشرة ودون تنبيه</li>
-          </ul>
-        </div>
+        
+       
     </div>
 
     <div id="detailsModal">
@@ -487,8 +447,51 @@
                 <span class="modal-label">ملاحظات:</span>
                 <span class="modal-value" id="modalNote"></span>
             </div>
+            
+            <div class="time-remaining" id="modalTimeRemaining">
+                الوقت المتبقي: جاري الحساب...
+            </div>
         </div>
     </div>
+    <table id="scheduleTable">
+      <thead>
+        <tr>
+          <th>اليوم</th>
+          <th>التاريخ الميلادي</th>
+          <th>اسم الشخص</th>
+          <th>ملاحظة</th>
+        </tr>
+      </thead>
+      <tbody id="scheduleBody"></tbody>
+    </table>
+  </div>
+
+  <div class="card-container policy-box">
+    <h2>المؤهلون لأيام الطوارئ</h2>
+    <p>الأشخاص المذكورون في الجدول أدناه فقط هم المؤهلون لاستخدام أيام الطوارئ.</p>
+    <h2>جدول المؤهلين لأيام الطوارئ</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>الاسم</th>
+          <th>مدة السقيا</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td></td><td>يحيى جابر</td><td>1 ساعة</td></tr>
+        <tr><td></td><td>عبدالله محمد جابر</td><td>1 ساعة</td></tr>
+        <tr><td></td><td>خزانات الجيران في الحي</td><td>1 ساعة</td></tr>
+      </tbody>
+    </table>
+    <div class="policy">
+      <br>
+   
+      <li>مدة السقيا في حالة الطوارئ لا تتجاوز <strong>ساعة واحدة فقط</strong></li>
+      <li>لا يتم منح أكثر من يوم طوارئ إلا بعد التأكد من الحاجة الحقيقية</li>
+      <li>أي تجاوز أو تلاعب يتم استبعاده مباشرة ودون تنبيه</li>
+    </ul>
+  </div>
 
     <script>
         const people = [
@@ -496,13 +499,13 @@
             "أحمد مفرح", "يحيى مفرح", "جابر يحيى", "حسين يحيى", "محمد مفرح",
             "علي جابر", "محمد يحيى", "علي أحمد", "محمد أحمد", "ماطر أحمد علي",
             "قاسم جابر", "جابر حسين", "مفرح أحمد", "يحيى علي", "جابر أحمد",
-            "أحمد بن يحيى", "أحمد شوعان", "محمد جبار", "🛑", 
+            "أحمد بن يحيى", "أحمد شوعان", "🛑", "🛑", "🛑"
         ];
         
-        let emergencyDays = [5, 10, 15, 20, 25, 30,];
+        let emergencyDays = [5, 10, 15, 20, 25,30];
         let scheduleTable = [];
         let currentSchedule = null;
-        let nextSchedule = null;
+        let modalInterval = null;
 
         function getDayName(date) { 
             const days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت']; 
@@ -557,9 +560,7 @@
             for (let i = 0; i < daysInMonth; i++) {
                 const date = new Date(year, month, i + 1);
                 let start = new Date(year, month, i, 17, 0, 0);
-                let end = new Date(year, month, i, 17, 0, 0);
-                end.setDate(end.getDate() + 1); // نهاية السقاية بعد 24 ساعة
-                
+                let end = new Date(year, month, i + 1, 17, 0, 0);
                 let personName = '', noteText = '', isEmergency = false;
 
                 if (emergencyDays.includes(i + 1)) {
@@ -616,18 +617,6 @@
             const now = new Date();
             const cs = scheduleTable.find(e => now >= e.start && now < e.end);
             currentSchedule = cs || null;
-            
-            // إيجاد السقاية التالية
-            nextSchedule = null;
-            if (scheduleTable.length > 0) {
-                for (let i = 0; i < scheduleTable.length; i++) {
-                    if (now < scheduleTable[i].start) {
-                        nextSchedule = scheduleTable[i];
-                        break;
-                    }
-                }
-            }
-            
             document.getElementById('currentPerson').textContent = cs ? cs.personName : "لا يوجد سَقْيَة الآن";
         }
 
@@ -653,25 +642,52 @@
             document.getElementById('modalStatus').textContent = status;
             document.getElementById('modalNote').textContent = note;
             
+            // تحديث الوقت المتبقي
+            updateModalTimeRemaining(endDate);
+            
             // إظهار النافذة
             document.getElementById('detailsModal').style.display = 'flex';
+            
+            // بدء التحديث التلقائي للوقت المتبقي
+            if (modalInterval) clearInterval(modalInterval);
+            modalInterval = setInterval(() => updateModalTimeRemaining(endDate), 1000);
+        }
+
+        function updateModalTimeRemaining(endDate) {
+            const now = new Date();
+            const diff = endDate - now;
+            
+            if (diff <= 0) {
+                document.getElementById('modalTimeRemaining').textContent = 'انتهت مدة السَقْيَة';
+                document.getElementById('modalStatus').textContent = 'انتهت';
+                if (modalInterval) clearInterval(modalInterval);
+                return;
+            }
+            
+            const hours = Math.floor(diff / 1000 / 60 / 60);
+            const minutes = Math.floor((diff / 1000 / 60) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+            
+            document.getElementById('modalTimeRemaining').textContent = 
+                `الوقت المتبقي: ${hours} ساعة ${minutes} دقيقة ${seconds} ثانية`;
         }
 
         document.getElementById('closeModal').onclick = function() {
             document.getElementById('detailsModal').style.display = 'none';
+            if (modalInterval) clearInterval(modalInterval);
         }
 
         function updateRemainingTime() {
             const now = new Date();
             updateCurrentSchedule();
             
-            if (!nextSchedule) {
+            if (!currentSchedule) {
                 document.getElementById('timer-text').textContent = "--:--:--";
                 document.querySelector('.countdown-circle').style.background = `conic-gradient(var(--primary-color) 0%, transparent 0%)`;
                 return;
             }
             
-            const diff = nextSchedule.start - now;
+            const diff = currentSchedule.end - now;
             
             if (diff <= 0) {
                 document.getElementById('timer-text').textContent = "00:00:00";
@@ -686,13 +702,10 @@
             
             document.getElementById('timer-text').textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             
-            // حساب النسبة المئوية للوقت المتبقي حتى بداية السقاية التالية
-            // باستخدام يوم كامل كمرجع (24 ساعة)
-            const totalDay = 24 * 60 * 60 * 1000; // ملي ثانية في يوم كامل
-            const percentage = 100 - (diff / totalDay) * 100;
-            const adjustedPercentage = Math.min(Math.max(percentage, 0), 100);
+            const totalDuration = currentSchedule.end - currentSchedule.start;
+            const percentage = 100 - (diff / totalDuration) * 100;
             
-            document.querySelector('.countdown-circle').style.background = `conic-gradient(var(--primary-color) ${adjustedPercentage}%, transparent ${adjustedPercentage}%)`;
+            document.querySelector('.countdown-circle').style.background = `conic-gradient(var(--primary-color) ${percentage}%, transparent ${percentage}%)`;
         }
 
         window.onload = function() {
@@ -704,4 +717,3 @@
     </script>
 </body>
 </html>
-
