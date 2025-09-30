@@ -1,4 +1,92 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مستوى الماء في الخزان</title>
+<style>
+  body { font-family: Arial, sans-serif; text-align: center; background-color: #f0f8ff; padding: 20px; }
+  h1 { color: #005a8d; }
+  .tank-container { position: relative; width: 300px; margin: 20px auto; display:none; }
+  .tank-image { width: 100%; display: block; border-radius: 10px; }
+  .water-level { position: absolute; bottom: 0; width: 100%; height: 0%; background-color: rgba(0,123,255,0.5); border-radius: 0 0 10px 10px; transition: height 0.5s ease; }
+  .data-display { font-size: 16px; font-weight: bold; margin: 10px 0; display:none; }
+  #updateTime { font-style: italic; color: #00796B; margin-bottom: 20px; display:none; }
+  #passwordPrompt { margin-top: 50px; }
+  input[type="password"] { padding: 5px; font-size: 16px; width: 150px; }
+  button { padding: 6px 12px; font-size: 16px; cursor:pointer; }
+</style>
+</head>
+<body>
+
+<h1>مستوى الماء في الخزان</h1>
+
+<div id="passwordPrompt">
+  <p>أدخل كلمة السر لعرض مستوى الماء:</p>
+  <input type="password" id="passwordInput" placeholder="كلمة السر">
+  <button onclick="checkPassword()">دخول</button>
+</div>
+
+<div class="tank-container" id="tankContainer">
+  <img src="https://i.postimg.cc/d0jvThnd/file-0000000089fc6246b605b17eb2fbc278-2.png" alt="خزان ماء" class="tank-image">
+  <div class="water-level" id="waterLevel"></div>
+</div>
+
+<div class="data-display" id="percentDisplay">جارٍ التحميل...</div>
+<div class="data-display" id="litersDisplay"></div>
+<div id="updateTime"></div>
+
+<script>
+  // إعدادات الخزان
+  const TANK_HEIGHT_M = 3.9;
+  const TANK_DIAMETER_M = 3.7;
+  const TANK_RADIUS_M = TANK_DIAMETER_M / 2;
+  const TOTAL_TANK_VOLUME_LITERS = Math.PI * Math.pow(TANK_RADIUS_M,2)*TANK_HEIGHT_M*1000;
+
+  // رابط Google Apps Script أو أي API يعيد نسبة الماء
+  const apiUrl = "https://script.google.com/macros/s/AKfycbzVB7uPTsNbotACV0aWTb7Y37wsI47BwCVbz_l4kitBgOBv9r_wTQJQGGWfjyGMU4ky/exec";
+
+  // كلمة السر المشفرة Base64 لكلمة 
+  const encryptedPassword = "aHBydQ==";
+
+  function checkPassword() {
+    const entered = document.getElementById("passwordInput").value;
+    const encodedEntered = btoa(entered); // تحويل الإدخال إلى Base64
+    if(encodedEntered === encryptedPassword){
+      document.getElementById("passwordPrompt").style.display="none";
+      document.getElementById("tankContainer").style.display="block";
+      document.getElementById("percentDisplay").style.display="block";
+      document.getElementById("litersDisplay").style.display="block";
+      document.getElementById("updateTime").style.display="block";
+      fetchWaterData();
+      setInterval(fetchWaterData,60000);
+    } else {
+      alert("كلمة السر خاطئة، حاول مرة أخرى.");
+    }
+  }
+
+  function fetchWaterData() {
+    fetch(apiUrl)
+      .then(res => res.json())
+      .then(data => {
+        const percent = parseFloat(data.percent) || 0;
+        const liters = (percent/100)*TOTAL_TANK_VOLUME_LITERS;
+        document.getElementById("waterLevel").style.height = percent + "%";
+        document.getElementById("percentDisplay").textContent = `النسبة الحالية: ${percent.toFixed(2)}%`;
+        document.getElementById("litersDisplay").textContent = `الكمية الحالية: ${liters.toFixed(2)} لتر`;
+        document.getElementById("updateTime").textContent = `آخر تحديث: ${data.lastUpdated || "غير معروف"}`;
+      })
+      .catch(err => {
+        console.error("Error fetching data:", err);
+        document.getElementById("percentDisplay").textContent = "تعذر تحميل البيانات";
+        document.getElementById("litersDisplay").textContent = "";
+        document.getElementById("updateTime").textContent = "";
+      });
+  }
+</script>
+
+</body>
+</html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -225,8 +313,6 @@
             text-align: right;
             position: relative;
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            max-height: 90vh;
-            overflow-y: auto;
         }
         
         #closeModal {
@@ -618,3 +704,4 @@
     </script>
 </body>
 </html>
+
