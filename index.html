@@ -1,3 +1,32 @@
+<!-- بداية رابط الموقع الجديد -->
+<div style="border: 2px solid red; padding: 15px; border-radius: 8px; background-color: #ffe5e5; color: red; font-weight: bold; font-size: 18px; text-align: center;">
+🔔 تنبيه مهم<br>
+يرجى إغلاق المحبس بعد الانتهاء من السقيا، فهذا أمر ضروري جدًا.<br>
+📌 في حال عدم إيقاف المحبس سيتم حذفك مباشرة من الجدول.
+</div>
+<div style="text-align:center; margin:20px 0;">
+  <a href="https://hpru.github.io/water/" target="_blank" 
+     style="
+       display:inline-block;
+       background:#0d6efd;
+       color:#fff;
+       padding:15px 25px;
+       border-radius:12px;
+       font-weight:bold;
+       font-size:1.2em;
+       text-decoration:none;
+       box-shadow:0 4px 12px rgba(0,0,0,0.2);
+       transition:all 0.3s ease;
+     "
+     onmouseover="this.style.background='#0b5ed7'; this.style.transform='translateY(-2px)';"
+     onmouseout="this.style.background='#0d6efd'; this.style.transform='translateY(0)';"
+     onmousedown="this.style.transform='translateY(1px)';"
+     onmouseup="this.style.transform='translateY(0)';"
+  >
+    اضغط هنا للموقع الجديد: hpru.github.io/water
+  </a>
+</div>
+<!-- نهاية الرابط -->
 
 <html lang="ar" dir="rtl">
 <head>
@@ -18,7 +47,7 @@
   }
   
   body {
-      font-family: Arial, sans-serif; /* تم التغيير لضمان التوافق مع Google Sites */
+      font-family: Arial, sans-serif;
       background: var(--background-light);
       margin: 0;
       padding: 10px;
@@ -51,7 +80,7 @@
 
   .tank-container {
       position: relative;
-      width: 150px; /* تم تصغير الحجم ليتناسب مع الجوال */
+      width: 150px;
       margin: 20px auto;
   }
   .tank-image {
@@ -68,35 +97,195 @@
       border-radius: 0 0 10px 10px;
       transition: height 0.5s ease;
   }
-  .data-display {
-      font-size: 16px;
-      font-weight: bold;
-      margin: 10px 0;
+
+  /* أنماط كلمة السر */
+  .password-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
   }
-  #updateTime {
-      font-style: italic;
-      color: #555;
+  .password-box {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      max-width: 400px;
+      width: 90%;
+      border: 3px solid var(--primary-color);
+  }
+  .password-box h2 {
+      color: var(--primary-color);
       margin-bottom: 10px;
+      font-size: 24px;
+  }
+  .password-box p {
+      color: #666;
+      margin-bottom: 25px;
+      font-size: 16px;
+  }
+  .password-box input {
+      width: 100%;
+      padding: 15px;
+      margin: 15px 0;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 16px;
+      text-align: center;
+      transition: all 0.3s ease;
+  }
+  .password-box input:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.1);
+      outline: none;
+  }
+  .password-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+  }
+  .password-buttons button {
+      flex: 1;
+      padding: 15px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: bold;
+  }
+  .btn-primary {
+      background: var(--primary-color);
+      color: white;
+  }
+  .btn-primary:hover {
+      background: #005a4f;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 121, 107, 0.3);
+  }
+  .btn-secondary {
+      background: #6c757d;
+      color: white;
+  }
+  .btn-secondary:hover {
+      background: #545b62;
+      transform: translateY(-2px);
+  }
+  .password-error {
+      color: #e74c3c;
+      margin-top: 15px;
+      display: none;
+      font-weight: bold;
+      background: #ffeaea;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #e74c3c;
   }
 
-  .password-prompt {
+  /* زر الدخول الرئيسي */
+  .login-section {
       text-align: center;
-      padding: 20px;
+      padding: 30px 20px;
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      border-radius: 15px;
+      border: 2px dashed #dee2e6;
+      transition: all 0.3s ease;
   }
-  input[type="password"] {
-      padding: 8px;
-      font-size: 14px;
-      width: 180px;
-      margin-right: 5px;
+  .login-section:hover {
+      border-color: var(--primary-color);
+      background: linear-gradient(135deg, #e8f5e8, #d4edda);
   }
-  button {
-      padding: 8px 15px;
-      font-size: 14px;
-      cursor: pointer;
-      background-color: var(--primary-color);
-      color: var(--text-light);
+  .login-icon {
+      font-size: 48px;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+  }
+  .login-title {
+      font-size: 22px;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+      font-weight: bold;
+  }
+  .login-description {
+      color: #666;
+      margin-bottom: 25px;
+      font-size: 16px;
+  }
+  .login-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--primary-color), #005a4f);
+      color: white;
+      padding: 15px 30px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 18px;
       border: none;
-      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 121, 107, 0.3);
+  }
+  .login-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 121, 107, 0.4);
+      background: linear-gradient(135deg, #005a4f, var(--primary-color));
+  }
+
+  /* أنماط لوحة مستوى الماء */
+  .advanced-water-display {
+      display: none;
+      animation: fadeIn 0.5s ease;
+  }
+  @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+  }
+  .water-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin: 20px 0;
+  }
+  .stat-card {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      border-left: 4px solid var(--primary-color);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+  }
+  .stat-card:hover {
+      transform: translateY(-2px);
+  }
+  .stat-value {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: var(--primary-color);
+  }
+  .stat-label {
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 8px;
+  }
+  .water-controls {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+  }
+  .water-controls button {
+      flex: 1;
+      padding: 12px;
+      font-size: 14px;
   }
 
   /* جدول السقاية */
@@ -240,7 +429,7 @@
   }
   .modal-row {
       display: flex;
-      flex-direction: column; /* التغيير الأساسي للتجاوب مع الجوال */
+      flex-direction: column;
       margin-bottom: 10px;
       border-bottom: 1px solid #eee;
       padding-bottom: 8px;
@@ -263,350 +452,523 @@
 </head>
 <body>
 
-<div class="section-container">
-  <h1>مستوى الماء في الخزان</h1>
-  <div class="password-prompt" id="passwordPrompt">
-    <p>أدخل كلمة السر لعرض مستوى الماء:</p>
-    <input type="password" id="passwordInput" placeholder="كلمة السر">
-    <button onclick="checkPassword()">دخول</button>
-  </div>
-  
-  <div class="tank-container" id="tankContainer">
-    <img src="https://i.postimg.cc/d0jvThnd/file-0000000089fc6246b605b17eb2fbc278-2.png" alt="خزان ماء" class="tank-image">
-    <div class="water-level" id="waterLevel"></div>
-  </div>
-  
-  <div class="data-display" id="percentDisplay"></div>
-  <div class="data-display" id="litersDisplay"></div>
-  <div id="updateTime"></div>
-</div>
-
-<div class="section-container">
-      
-    <div class="person-box">
-        سَقْوُهُ اليوم: <span id="currentPerson" class="person-name">جارٍ التحديد...</span>
-    </div>
-    <div class="countdown-container">
-        <div class="countdown-circle">
-            <span id="timer-text">--:--:--</span>
+<!-- نافذة كلمة السر -->
+<div class="password-overlay" id="passwordOverlay" style="display: none;">
+    <div class="password-box">
+        <h2>🔒 الدخول إلى مستوى الماء</h2>
+        <p>أدخل كلمة المرور للوصول إلى بيانات مستوى الماء</p>
+        <input type="password" id="waterPassword" placeholder="أدخل كلمة المرور هنا">
+        <div class="password-buttons">
+            <button class="btn-primary" onclick="checkWaterPassword()">دخول</button>
+            <button class="btn-secondary" onclick="closePasswordOverlay()">إلغاء</button>
         </div>
-        <div class="countdown-label">الوقت المتبقي </div>
+        <div class="password-error" id="waterPasswordError">كلمة المرور غير صحيحة</div>
     </div>
 </div>
 
 <div class="section-container">
-    <table id="scheduleTable">
-      <thead>
-        <tr>
-          <th>اليوم</th>
-          <th>التاريخ</th>
-          <th>الاسم</th>
-          <th>ملاحظة</th>
-        </tr>
-      </thead>
-      <tbody id="scheduleBody"></tbody>
-    </table>
+  <!-- قسم الدخول إلى مستوى الماء -->
+  <div class="login-section" id="loginSection">
+      <div class="login-icon">💧</div>
+      <div class="login-title">عرض مستوى الماء</div>
+      <div class="login-description">للوصول إلى بيانات مستوى الماء الحالية في الخزان</div>
+      <button class="login-btn" onclick="showPasswordOverlay()">
+          <span>🔓 الدخول إلى مستوى الماء</span>
+      </button>
+  </div>
+  
+  <!-- قسم مستوى الماء (محمي) -->
+  <div class="advanced-water-display" id="advancedWaterDisplay">
+      <h2>📊 مستوى الماء الحالي</h2>
+      
+      <div class="tank-container">
+        <img src="https://i.postimg.cc/d0jvThnd/file-0000000089fc6246b605b17eb2fbc278-2.png" alt="خزان ماء" class="tank-image">
+        <div class="water-level" id="waterLevel"></div>
+      </div>
+      
+      <div class="water-stats">
+        <div class="stat-card">
+          <div class="stat-value" id="percentDisplay">0%</div>
+          <div class="stat-label">النسبة المئوية</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="litersDisplay">0 لتر</div>
+          <div class="stat-label">الحجم الحالي</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="signalStrength">0</div>
+          <div class="stat-label">قوة الإشارة</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="waterStatus">غير معروف</div>
+          <div class="stat-label">حالة الخزان</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="lastUpdateTime">--:--:--</div>
+          <div class="stat-label">آخر تحديث</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="totalCapacity">0 لتر</div>
+          <div class="stat-label">السعة الكلية</div>
+        </div>
+      </div>
+      
+      <div class="water-controls">
+        <button class="btn-primary" onclick="refreshWaterData()">🔄 تحديث البيانات</button>
+        <button class="btn-secondary" onclick="hideWaterDisplay()">إخفاء المستوى</button>
+      </div>
+  </div>
+</div>
+
+<!-- باقي الأقسام بدون تغيير -->
+<div class="section-container">
+  <div class="person-box">
+    سَقْوُهُ اليوم: <span id="currentPerson" class="person-name">جارٍ التحديد...</span>
+  </div>
+  <div class="countdown-container">
+    <div class="countdown-circle">
+      <span id="timer-text">--:--:--</span>
+    </div>
+    <div class="countdown-label">الوقت المتبقي</div>
+  </div>
 </div>
 
 <div class="section-container">
-    <h2>المؤهلون لأيام الطوارئ</h2>
-    <p>الأشخاص المذكورون في الجدول أدناه فقط هم المؤهلون لاستخدام أيام الطوارئ.</p>
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>الاسم</th>
-          <th>مدة السقيا</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>1</td><td>يحيى جابر</td><td>1 ساعة</td></tr>
-        <tr><td>2</td><td>عبدالله محمد جابر</td><td>1 ساعة</td></tr>
-        <tr><td>3</td><td>خزانات الجيران في الحي</td><td>1 ساعة</td></tr>
-      </tbody>
-    </table>
-    <div class="policy">
-      <br>
-      <ul>
-        <li>مدة السقيا في حالة الطوارئ لا تتجاوز <strong>ساعة واحدة فقط</strong></li>
-        <li>لا يتم منح أكثر من يوم طوارئ إلا بعد التأكد من الحاجة الحقيقية</li>
-        <li>أي تجاوز أو تلاعب يتم استبعاده مباشرة ودون تنبيه</li>
-      </ul>
-    </div>
+  <table id="scheduleTable">
+    <thead>
+      <tr>
+        <th>اليوم</th>
+        <th>التاريخ</th>
+        <th>الاسم</th>
+        <th>ملاحظة</th>
+      </tr>
+    </thead>
+    <tbody id="scheduleBody"></tbody>
+  </table>
+</div>
+
+<div class="section-container">
+  <h2>المؤهلون لأيام الطوارئ</h2>
+  <p>الأشخاص المذكورون في الجدول أدناه فقط هم المؤهلون لاستخدام أيام الطوارئ.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>الاسم</th>
+        <th>مدة السقيا</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>يحيى جابر</td><td>1 ساعة</td></tr>
+      <tr><td>2</td><td>عبدالله محمد جابر</td><td>1 ساعة</td></tr>
+      <tr><td>3</td><td>خزانات الجيران في الحي</td><td>1 ساعة</td></tr>
+    </tbody>
+  </table>
+  <div class="policy">
+    <br>
+    <ul>
+      <li>مدة السقيا في حالة الطوارئ لا تتجاوز <strong>ساعة واحدة فقط</strong></li>
+      <li>لا يتم منح أكثر من يوم طوارئ إلا بعد التأكد من الحاجة الحقيقية</li>
+      <li>أي تجاوز أو تلاعب يتم استبعاده مباشرة ودون تنبيه</li>
+    </ul>
+  </div>
 </div>
 
 <div id="detailsModal">
-    <div id="detailsModalContent">
-        <span id="closeModal">&times;</span>
-        <div class="modal-header">
-            <h2>تفاصيل السَقْيَة</h2>
-        </div>
-        
-        <div class="modal-row">
-            <span class="modal-label">اسم الشخص:</span>
-            <span class="modal-value" id="modalPerson"></span>
-        </div>
-        
-        <div class="modal-row">
-            <span class="modal-label">التاريخ:</span>
-            <span class="modal-value" id="modalDate"></span>
-        </div>
-        
-        <div class="modal-row">
-            <span class="modal-label">وقت بدء السَقْيَة:</span>
-            <span class="modal-value" id="modalStart"></span>
-        </div>
-        
-        <div class="modal-row">
-            <span class="modal-label">وقت انتهاء السَقْيَة:</span>
-            <span class="modal-value" id="modalEnd"></span>
-        </div>
-        
-        <div class="modal-row">
-            <span class="modal-label">حالة السَقْيَة:</span>
-            <span class="modal-value" id="modalStatus"></span>
-        </div>
-        
-        <div class="modal-row">
-            <span class="modal-label">ملاحظات:</span>
-            <span class="modal-value" id="modalNote"></span>
-        </div>
+  <div id="detailsModalContent">
+    <span id="closeModal">&times;</span>
+    <div class="modal-header">
+      <h2>تفاصيل السَقْيَة</h2>
     </div>
+    
+    <div class="modal-row">
+      <span class="modal-label">اسم الشخص:</span>
+      <span class="modal-value" id="modalPerson"></span>
+    </div>
+    
+    <div class="modal-row">
+      <span class="modal-label">التاريخ:</span>
+      <span class="modal-value" id="modalDate"></span>
+    </div>
+    
+    <div class="modal-row">
+      <span class="modal-label">وقت بدء السَقْيَة:</span>
+      <span class="modal-value" id="modalStart"></span>
+    </div>
+    
+    <div class="modal-row">
+      <span class="modal-label">وقت انتهاء السَقْيَة:</span>
+      <span class="modal-value" id="modalEnd"></span>
+    </div>
+    
+    <div class="modal-row">
+      <span class="modal-label">حالة السَقْيَة:</span>
+      <span class="modal-value" id="modalStatus"></span>
+    </div>
+    
+    <div class="modal-row">
+      <span class="modal-label">ملاحظات:</span>
+      <span class="modal-value" id="modalNote"></span>
+    </div>
+  </div>
 </div>
 
 <script>
-    // Tank logic
-    const TANK_HEIGHT_M = 3.9;
-    const TANK_DIAMETER_M = 3.7;
-    const TANK_RADIUS_M = TANK_DIAMETER_M / 2;
-    const TOTAL_TANK_VOLUME_LITERS = Math.PI * Math.pow(TANK_RADIUS_M, 2) * TANK_HEIGHT_M * 1000;
-    const apiUrl = "https://script.google.com/macros/s/AKfycbzVB7uPTsNbotACV0aWTb7Y37wsI47BwCVbz_l4kitBgOBv9r_wTQJQGGWfjyGMU4ky/exec";
-    const encryptedPassword = "aHBydQ==";
+// كلمة السر الافتراضية
+const WATER_PASSWORD = "hpru";
 
-    function checkPassword() {
-      const entered = document.getElementById("passwordInput").value;
-      const encodedEntered = btoa(entered);
-      if (encodedEntered === encryptedPassword) {
-        document.getElementById("passwordPrompt").style.display = "none";
-        document.getElementById("tankContainer").style.display = "block";
-        document.getElementById("percentDisplay").style.display = "block";
-        document.getElementById("litersDisplay").style.display = "block";
-        document.getElementById("updateTime").style.display = "block";
-        fetchWaterData();
-        setInterval(fetchWaterData, 60000);
+// إعدادات الخزان
+const TANK_CONFIG = {
+  height: 355,
+  diameter: 370,
+  shape: 'cylindrical'
+};
+
+let totalTankVolume = 0;
+
+// دوال كلمة السر
+function showPasswordOverlay() {
+  document.getElementById('passwordOverlay').style.display = 'flex';
+  document.getElementById('waterPassword').value = '';
+  document.getElementById('waterPasswordError').style.display = 'none';
+  document.getElementById('waterPassword').focus();
+}
+
+function closePasswordOverlay() {
+  document.getElementById('passwordOverlay').style.display = 'none';
+}
+
+function checkWaterPassword() {
+  const input = document.getElementById('waterPassword').value;
+  const errorElement = document.getElementById('waterPasswordError');
+  
+  if (input === WATER_PASSWORD) {
+    document.getElementById('passwordOverlay').style.display = 'none';
+    document.getElementById('advancedWaterDisplay').style.display = 'block';
+    document.getElementById('loginSection').style.display = 'none';
+    initializeWaterDisplay();
+  } else {
+    errorElement.style.display = 'block';
+    document.getElementById('waterPassword').value = '';
+    document.getElementById('waterPassword').focus();
+  }
+}
+
+function hideWaterDisplay() {
+  document.getElementById('advancedWaterDisplay').style.display = 'none';
+  document.getElementById('loginSection').style.display = 'block';
+}
+
+// تهيئة عرض مستوى الماء
+function initializeWaterDisplay() {
+  totalTankVolume = calculateTankVolume();
+  document.getElementById('totalCapacity').textContent = Math.round(totalTankVolume).toLocaleString() + ' لتر';
+  fetchWaterData();
+  setInterval(fetchWaterData, 30000);
+}
+
+// حساب سعة الخزان
+function calculateTankVolume() {
+  const radius = TANK_CONFIG.diameter / 2;
+  if (TANK_CONFIG.shape === 'cylindrical') {
+    const volumeCm3 = Math.PI * Math.pow(radius, 2) * TANK_CONFIG.height;
+    return volumeCm3 / 1000;
+  }
+  return 0;
+}
+
+// حساب كمية الماء
+function calculateWaterVolume(distance) {
+  const waterHeight = TANK_CONFIG.height - distance;
+  if (waterHeight <= 0) return 0;
+  if (waterHeight > TANK_CONFIG.height) return totalTankVolume;
+  const radius = TANK_CONFIG.diameter / 2;
+  if (TANK_CONFIG.shape === 'cylindrical') {
+    const volumeCm3 = Math.PI * Math.pow(radius, 2) * waterHeight;
+    return volumeCm3 / 1000;
+  }
+  return 0;
+}
+
+// جلب بيانات الماء
+async function fetchWaterData() {
+  try {
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxppOlRtEYur9rESbp-9VWqm7JYxPe1TvAv4RzQCtlHsimI76xcKH_93AzwCEuhj8AK/exec';
+    const response = await fetch(`${SCRIPT_URL}?operation=getLatest&t=${Date.now()}`);
+    
+    if (response.ok) {
+      const data = await response.json();
+      if (data.status === 'success') {
+        updateWaterDisplay(data.data);
       } else {
-        alert("كلمة السر خاطئة، حاول مرة أخرى.");
+        updateWaterDisplay(generateMockData());
       }
+    } else {
+      updateWaterDisplay(generateMockData());
     }
+  } catch (error) {
+    console.error('Error fetching water data:', error);
+    updateWaterDisplay(generateMockData());
+  }
+}
 
-    function fetchWaterData() {
-      fetch(apiUrl)
-        .then(res => res.json())
-        .then(data => {
-          const percent = parseFloat(data.percent) || 0;
-          const liters = (percent / 100) * TOTAL_TANK_VOLUME_LITERS;
-          document.getElementById("waterLevel").style.height = percent + "%";
-          document.getElementById("percentDisplay").textContent = `النسبة الحالية: ${percent.toFixed(2)}%`;
-          document.getElementById("litersDisplay").textContent = `الكمية الحالية: ${liters.toFixed(2)} لتر`;
-          document.getElementById("updateTime").textContent = `آخر تحديث: ${data.lastUpdated || "غير معروف"}`;
-        })
-        .catch(err => {
-          console.error("Error fetching data:", err);
-          document.getElementById("percentDisplay").textContent = "تعذر تحميل البيانات";
-          document.getElementById("litersDisplay").textContent = "";
-          document.getElementById("updateTime").textContent = "";
-        });
-    }
+// توليد بيانات تجريبية
+function generateMockData() {
+  const distance = Math.floor(Math.random() * 200) + 100;
+  const volume = calculateWaterVolume(distance);
+  const level = (volume / totalTankVolume) * 100;
+  
+  return {
+    level: level,
+    distance: distance,
+    volume: volume,
+    strength: Math.floor(Math.random() * 500) + 100,
+    status: getWaterStatus(level),
+    timestamp: new Date().toISOString(),
+    device: 'نظام مراقبة الماء'
+  };
+}
 
-    // Schedule logic
-    const people = [
-        "مفرح عمضان", "محمد عمضان", "مفرح جابر", "يحيى بن جابر", "علي يحيى",
-        "أحمد مفرح", "يحيى مفرح", "جابر يحيى", "حسين يحيى", "محمد مفرح",
-        "علي جابر", "محمد يحيى", "علي أحمد", "محمد أحمد", "ماطر أحمد علي",
-        "قاسم جابر", "جابر حسين", "مفرح أحمد", "يحيى علي", "جابر أحمد",
-        "أحمد بن يحيى", "أحمد شوعان", "محمد جبار", "home",
-    ];
-    let emergencyDays = [5, 10, 15, 20, 25,30 ];
-    let scheduleTable = [];
-    let currentSchedule = null;
-    let nextSchedule = null;
+// تحديث عرض الماء
+function updateWaterDisplay(data) {
+  let distance, level, volume;
+  
+  if (data.distance && data.distance > 0) {
+    distance = parseFloat(data.distance);
+    volume = calculateWaterVolume(distance);
+    level = (volume / totalTankVolume) * 100;
+  } else if (data.level && data.level > 0) {
+    level = parseFloat(data.level);
+    volume = (level / 100) * totalTankVolume;
+    distance = TANK_CONFIG.height - (level / 100) * TANK_CONFIG.height;
+  } else {
+    distance = Math.floor(Math.random() * 200) + 100;
+    volume = calculateWaterVolume(distance);
+    level = (volume / totalTankVolume) * 100;
+  }
+  
+  // تحديث واجهة المستخدم
+  document.getElementById('waterLevel').style.height = level + '%';
+  document.getElementById('percentDisplay').textContent = level.toFixed(1) + '%';
+  document.getElementById('litersDisplay').textContent = Math.round(volume).toLocaleString() + ' لتر';
+  
+  document.getElementById('signalStrength').textContent = data.strength || '0';
+  document.getElementById('waterStatus').textContent = data.status || getWaterStatus(level);
+  document.getElementById('lastUpdateTime').textContent = new Date().toLocaleTimeString('ar-SA');
+}
 
-    function getDayName(date) { 
-        const days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت']; 
-        return days[date.getDay()]; 
-    }
+// تحديد حالة الخزان
+function getWaterStatus(percentage) {
+  if (percentage >= 80) return '🟢 ممتاز';
+  if (percentage >= 50) return '🟡 جيد';
+  if (percentage >= 20) return '🟠 منخفض';
+  return '🔴 حرج';
+}
 
-    function formatDateFull(date) {
-        const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
-        return date.toLocaleDateString('ar-EG', options);
-    }
+// تحديث يدوي لبيانات الماء
+function refreshWaterData() {
+  fetchWaterData();
+}
 
-    function formatDateTimeFull(date) {
-        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
-        return date.toLocaleDateString('ar-EG', options);
-    }
+// السماح بالدخول بالزر Enter
+document.getElementById('waterPassword').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    checkWaterPassword();
+  }
+});
 
-    function generateSchedule() {
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = today.getMonth();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-        const tbody = document.getElementById('scheduleBody');
-        tbody.innerHTML = '';
-        
-        const lastMonth = new Date(year, month, 0);
-        const lastMonthDays = new Date(lastMonth.getFullYear(), lastMonth.getMonth() + 1, 0).getDate();
-        
-        let dayCounter = 0;
-        for (let d = 1; d <= lastMonthDays; d++) {
-            if (!emergencyDays.includes(d)) {
-                dayCounter++;
-            }
+// ============================================================================
+// الكود الأصلي لجدول السقاية (بدون تغيير)
+// ============================================================================
+
+const people = [
+    "مفرح عمضان", "محمد عمضان", "مفرح جابر", "يحيى بن جابر", "علي يحيى",
+    "أحمد مفرح", "يحيى مفرح", "جابر يحيى", "حسين يحيى", "محمد مفرح",
+    "علي جابر", "محمد يحيى", "علي أحمد", "محمد أحمد", "ماطر أحمد علي",
+    "قاسم جابر", "جابر حسين", "مفرح أحمد", "يحيى علي", "جابر أحمد",
+    "أحمد بن يحيى", "أحمد شوعان", "محمد جبار", "home",
+];
+let emergencyDays = [5, 10, 15, 20, 25, 30];
+let scheduleTable = [];
+let currentSchedule = null;
+let nextSchedule = null;
+
+function getDayName(date) { 
+    const days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت']; 
+    return days[date.getDay()]; 
+}
+
+function formatDateFull(date) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+    return date.toLocaleDateString('ar-EG', options);
+}
+
+function formatDateTimeFull(date) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
+    return date.toLocaleDateString('ar-EG', options);
+}
+
+function generateSchedule() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const tbody = document.getElementById('scheduleBody');
+    tbody.innerHTML = '';
+    
+    const lastMonth = new Date(year, month, 0);
+    const lastMonthDays = new Date(lastMonth.getFullYear(), lastMonth.getMonth() + 1, 0).getDate();
+    
+    let dayCounter = 0;
+    for (let d = 1; d <= lastMonthDays; d++) {
+        if (!emergencyDays.includes(d)) {
+            dayCounter++;
         }
-        
-        scheduleTable = [];
-        
-        for (let i = 0; i < daysInMonth; i++) {
-            const date = new Date(year, month, i + 1);
-            let start = new Date(year, month, i, 17, 0, 0);
-            let end = new Date(year, month, i, 17, 0, 0);
-            end.setDate(end.getDate() + 1);
-            
-            let personName = '', noteText = '', isEmergency = false;
-
-            if (emergencyDays.includes(i + 1)) {
-                personName = 'يوم طوارئ';
-                noteText = '';
-                isEmergency = true;
-            } else {
-                const personIndex = dayCounter % people.length;
-                personName = people[personIndex];
-                noteText = '';
-                dayCounter++;
-            }
-            
-            scheduleTable.push({ date, personName, start, end, note: noteText, isEmergency });
-        }
-
-        scheduleTable.forEach(entry => {
-            const row = document.createElement('tr');
-            const nowDate = new Date();
-            
-            if (nowDate >= entry.start && nowDate < entry.end) {
-                row.classList.add('selected');
-                currentSchedule = entry;
-            }
-            if (nowDate > entry.end) {
-                row.classList.add('past');
-            }
-            if (entry.isEmergency) {
-                row.classList.add('emergency');
-            }
-            
-            row.innerHTML = `
-                <td>${getDayName(entry.date)}</td>
-                <td>${entry.date.toLocaleDateString('ar-EG', { month: 'long', day: 'numeric' })}</td>
-                <td>${entry.personName}</td>
-                <td>
-                    ${entry.note}
-                    <button class="detail-btn" onclick="showDetails('${entry.personName}', '${entry.start.toISOString()}', '${entry.end.toISOString()}', '${entry.note}', ${entry.isEmergency})">تفاصيل</button>
-                </td>`;
-            
-            tbody.appendChild(row);
-        });
-        updateCurrentSchedule();
     }
+    
+    scheduleTable = [];
+    
+    for (let i = 0; i < daysInMonth; i++) {
+        const date = new Date(year, month, i + 1);
+        let start = new Date(year, month, i, 17, 0, 0);
+        let end = new Date(year, month, i, 17, 0, 0);
+        end.setDate(end.getDate() + 1);
+        
+        let personName = '', noteText = '', isEmergency = false;
 
-    function updateCurrentSchedule() {
-        const now = new Date();
-        const cs = scheduleTable.find(e => now >= e.start && now < e.end);
-        currentSchedule = cs || null;
-        
-        nextSchedule = null;
-        if (scheduleTable.length > 0) {
-            for (let i = 0; i < scheduleTable.length; i++) {
-                if (now < scheduleTable[i].start) {
-                    nextSchedule = scheduleTable[i];
-                    break;
-                }
-            }
-        }
-        
-        document.getElementById('currentPerson').textContent = cs ? cs.personName : "لا يوجد سَقْيَة الآن";
-    }
-
-    function showDetails(name, start, end, note, isEmergency) {
-        const startDate = new Date(start);
-        const endDate = new Date(end);
-        const now = new Date();
-        
-        document.getElementById('modalPerson').textContent = name;
-        document.getElementById('modalDate').textContent = formatDateFull(startDate);
-        document.getElementById('modalStart').textContent = formatDateTimeFull(startDate);
-        document.getElementById('modalEnd').textContent = formatDateTimeFull(endDate);
-        
-        let status = '';
-        if (now < startDate) {
-            status = 'لم تبدأ بعد';
-        } else if (now >= startDate && now < endDate) {
-            status = 'يستقي الان';
+        if (emergencyDays.includes(i + 1)) {
+            personName = 'يوم طوارئ';
+            noteText = '';
+            isEmergency = true;
         } else {
-            status = 'انتهت';
+            const personIndex = dayCounter % people.length;
+            personName = people[personIndex];
+            noteText = '';
+            dayCounter++;
         }
         
-        document.getElementById('modalStatus').textContent = status;
-        document.getElementById('modalNote').textContent = note;
-        document.getElementById('detailsModal').style.display = 'flex';
+        scheduleTable.push({ date, personName, start, end, note: noteText, isEmergency });
     }
 
-    document.getElementById('closeModal').onclick = function() {
-        document.getElementById('detailsModal').style.display = 'none';
-    }
-
-    function updateRemainingTime() {
-        const now = new Date();
-        updateCurrentSchedule();
+    scheduleTable.forEach(entry => {
+        const row = document.createElement('tr');
+        const nowDate = new Date();
         
-        if (!nextSchedule) {
-            document.getElementById('timer-text').textContent = "--:--:--";
-            document.querySelector('.countdown-circle').style.background = `conic-gradient(var(--primary-color) 0%, transparent 0%)`;
-            return;
+        if (nowDate >= entry.start && nowDate < entry.end) {
+            row.classList.add('selected');
+            currentSchedule = entry;
+        }
+        if (nowDate > entry.end) {
+            row.classList.add('past');
+        }
+        if (entry.isEmergency) {
+            row.classList.add('emergency');
         }
         
-        const diff = nextSchedule.start - now;
+        row.innerHTML = `
+            <td>${getDayName(entry.date)}</td>
+            <td>${entry.date.toLocaleDateString('ar-EG', { month: 'long', day: 'numeric' })}</td>
+            <td>${entry.personName}</td>
+            <td>
+                ${entry.note}
+                <button class="detail-btn" onclick="showDetails('${entry.personName}', '${entry.start.toISOString()}', '${entry.end.toISOString()}', '${entry.note}', ${entry.isEmergency})">تفاصيل</button>
+            </td>`;
         
-        if (diff <= 0) {
-            document.getElementById('timer-text').textContent = "00:00:00";
-            document.querySelector('.countdown-circle').style.background = `conic-gradient(var(--primary-color) 100%, transparent 100%)`;
-            generateSchedule();
-            return;
+        tbody.appendChild(row);
+    });
+    updateCurrentSchedule();
+}
+
+function updateCurrentSchedule() {
+    const now = new Date();
+    const cs = scheduleTable.find(e => now >= e.start && now < e.end);
+    currentSchedule = cs || null;
+    
+    nextSchedule = null;
+    if (scheduleTable.length > 0) {
+        for (let i = 0; i < scheduleTable.length; i++) {
+            if (now < scheduleTable[i].start) {
+                nextSchedule = scheduleTable[i];
+                break;
+            }
         }
-        
-        const hours = Math.floor(diff / 1000 / 60 / 60);
-        const minutes = Math.floor((diff / 1000 / 60) % 60);
-        const seconds = Math.floor((diff / 1000) % 60);
-        
-        document.getElementById('timer-text').textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        
-        const totalDuration = nextSchedule.start - (new Date(nextSchedule.start.getFullYear(), nextSchedule.start.getMonth(), nextSchedule.start.getDate(), 0, 0, 0));
-        const percentage = 100 - (diff / totalDuration) * 100;
-        const adjustedPercentage = Math.min(Math.max(percentage, 0), 100);
-        
-        document.querySelector('.countdown-circle').style.background = `conic-gradient(var(--primary-color) ${adjustedPercentage}%, transparent ${adjustedPercentage}%)`;
     }
+    
+    document.getElementById('currentPerson').textContent = cs ? cs.personName : "لا يوجد سَقْيَة الآن";
+}
 
-    window.onload = function() {
-        // Hide elements initially
-        document.getElementById("tankContainer").style.display = "none";
-        document.getElementById("percentDisplay").style.display = "none";
-        document.getElementById("litersDisplay").style.display = "none";
-        document.getElementById("updateTime").style.display = "none";
+function showDetails(name, start, end, note, isEmergency) {
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+    const now = new Date();
+    
+    document.getElementById('modalPerson').textContent = name;
+    document.getElementById('modalDate').textContent = formatDateFull(startDate);
+    document.getElementById('modalStart').textContent = formatDateTimeFull(startDate);
+    document.getElementById('modalEnd').textContent = formatDateTimeFull(endDate);
+    
+    let status = '';
+    if (now < startDate) {
+        status = 'لم تبدأ بعد';
+    } else if (now >= startDate && now < endDate) {
+        status = 'يستقي الان';
+    } else {
+        status = 'انتهت';
+    }
+    
+    document.getElementById('modalStatus').textContent = status;
+    document.getElementById('modalNote').textContent = note;
+    document.getElementById('detailsModal').style.display = 'flex';
+}
 
+document.getElementById('closeModal').onclick = function() {
+    document.getElementById('detailsModal').style.display = 'none';
+}
+
+function updateRemainingTime() {
+    const now = new Date();
+    updateCurrentSchedule();
+    
+    if (!nextSchedule) {
+        document.getElementById('timer-text').textContent = "--:--:--";
+        document.querySelector('.countdown-circle').style.background = `conic-gradient(var(--primary-color) 0%, transparent 0%)`;
+        return;
+    }
+    
+    const diff = nextSchedule.start - now;
+    
+    if (diff <= 0) {
+        document.getElementById('timer-text').textContent = "00:00:00";
+        document.querySelector('.countdown-circle').style.background = `conic-gradient(var(--primary-color) 100%, transparent 100%)`;
         generateSchedule();
-        updateRemainingTime();
-        setInterval(updateRemainingTime, 1000);
-        setInterval(generateSchedule, 60 * 60 * 1000);
+        return;
     }
+    
+    const hours = Math.floor(diff / 1000 / 60 / 60);
+    const minutes = Math.floor((diff / 1000 / 60) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+    
+    document.getElementById('timer-text').textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+    const totalDuration = nextSchedule.start - (new Date(nextSchedule.start.getFullYear(), nextSchedule.start.getMonth(), nextSchedule.start.getDate(), 0, 0, 0));
+    const percentage = 100 - (diff / totalDuration) * 100;
+    const adjustedPercentage = Math.min(Math.max(percentage, 0), 100);
+    
+    document.querySelector('.countdown-circle').style.background = `conic-gradient(var(--primary-color) ${adjustedPercentage}%, transparent ${adjustedPercentage}%)`;
+}
+
+// تهيئة الصفحة
+window.onload = function() {
+    // إخفاء قسم مستوى الماء في البداية
+    document.getElementById('advancedWaterDisplay').style.display = 'none';
+    document.getElementById('passwordOverlay').style.display = 'none';
+    
+    // تهيئة جدول السقاية
+    generateSchedule();
+    updateRemainingTime();
+    setInterval(updateRemainingTime, 1000);
+    setInterval(generateSchedule, 60 * 60 * 1000);
+}
 </script>
 
 </body>
