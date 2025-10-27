@@ -1,7 +1,4 @@
-<!-- بداية رابط الموقع الجديد -->
-
-<!-- نهاية الرابط -->
-
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -426,6 +423,8 @@
 </head>
 <body>
 
+<!-- نهاية الرابط -->
+
 <!-- نافذة كلمة السر -->
 <div class="password-overlay" id="passwordOverlay" style="display: none;">
     <div class="password-box">
@@ -456,7 +455,7 @@
       <h2>📊 مستوى الماء الحالي</h2>
       
       <div class="tank-container">
-        <img src="https://i.postimg.cc/d0jvThnd/file-0000000089fc6246b605b17eb2fbc278-2.png" alt="خزان ماء" class="tank-image">
+        <img src="https://i.postimg.cc/fyPGh4kx/Chat-GPT-Image-Oct-19-2025-10-26-24-PM.png" alt="خزان ماء" class="tank-image">
         <div class="water-level" id="waterLevel"></div>
       </div>
       
@@ -474,8 +473,8 @@
           <div class="stat-label">قوة الإشارة</div>
         </div>
         <div class="stat-card">
-          <div class="stat-value" id="waterStatus">غير معروف</div>
-          <div class="stat-label">حالة الخزان</div>
+          <div class="stat-value" id="distanceDisplay">0 سم</div>
+          <div class="stat-label">المسافة</div>
         </div>
         <div class="stat-card">
           <div class="stat-value" id="lastUpdateTime">--:--:--</div>
@@ -697,7 +696,6 @@ function generateMockData() {
     distance: distance,
     volume: volume,
     strength: Math.floor(Math.random() * 500) + 100,
-    status: getWaterStatus(level),
     timestamp: new Date().toISOString(),
     device: 'نظام مراقبة الماء'
   };
@@ -727,16 +725,8 @@ function updateWaterDisplay(data) {
   document.getElementById('litersDisplay').textContent = Math.round(volume).toLocaleString() + ' لتر';
   
   document.getElementById('signalStrength').textContent = data.strength || '0';
-  document.getElementById('waterStatus').textContent = data.status || getWaterStatus(level);
+  document.getElementById('distanceDisplay').textContent = distance.toFixed(1) + ' سم';
   document.getElementById('lastUpdateTime').textContent = new Date().toLocaleTimeString('ar-SA');
-}
-
-// تحديد حالة الخزان
-function getWaterStatus(percentage) {
-  if (percentage >= 80) return '🟢 ممتاز';
-  if (percentage >= 50) return '🟡 جيد';
-  if (percentage >= 20) return '🟠 منخفض';
-  return '🔴 حرج';
 }
 
 // تحديث يدوي لبيانات الماء
@@ -752,7 +742,7 @@ document.getElementById('waterPassword').addEventListener('keypress', function(e
 });
 
 // ============================================================================
-// الكود الأصلي لجدول السقاية (بدون تغيير)
+// الكود الأصلي لجدول السقاية (مع تحسينات لبدء كل شهر بالشخص الأول)
 // ============================================================================
 
 const people = [
@@ -760,7 +750,7 @@ const people = [
     "أحمد مفرح", "يحيى مفرح", "جابر يحيى", "حسين يحيى", "محمد مفرح",
     "علي جابر", "محمد يحيى", "علي أحمد", "محمد أحمد", "ماطر أحمد علي",
     "قاسم جابر", "جابر حسين", "مفرح أحمد", "يحيى علي", "جابر أحمد",
-    "أحمد بن يحيى", "أحمد شوعان", "محمد جبار", "home",
+    "أحمد بن يحيى", "🛑", "محمد جبار", "home",
 ];
 let emergencyDays = [5, 10, 15, 20, 25, 30];
 let scheduleTable = [];
@@ -782,26 +772,42 @@ function formatDateTimeFull(date) {
     return date.toLocaleDateString('ar-EG', options);
 }
 
+// دالة محسنة لتوليد الجدول ديناميكياً مع بدء كل شهر بالشخص الأول
 function generateSchedule() {
     const today = new Date();
     const year = today.getFullYear();
     const month = today.getMonth();
+    
+    // حساب عدد أيام الشهر الحالي ديناميكياً
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const tbody = document.getElementById('scheduleBody');
     tbody.innerHTML = '';
     
-    const lastMonth = new Date(year, month, 0);
-    const lastMonthDays = new Date(lastMonth.getFullYear(), lastMonth.getMonth() + 1, 0).getDate();
-    
+    // بدء كل شهر جديد بالشخص الأول (مفرح عمضان)
     let dayCounter = 0;
-    for (let d = 1; d <= lastMonthDays; d++) {
-        if (!emergencyDays.includes(d)) {
-            dayCounter++;
+    
+    // استبعاد "home" إذا كان الشهر 28 يومًا فقط
+    let currentPeople = [...people];
+    if (daysInMonth === 28) {
+        currentPeople = currentPeople.filter(person => person !== "home");
+        console.log("تم استبعاد 'home' من الجدول لأن الشهر 28 يومًا");
+    }
+    
+    // استبعاد يوم الطوارئ في اليوم 30 إذا كان الشهر 30 يومًا ووضعه في اليوم 29
+    let currentEmergencyDays = [...emergencyDays];
+    if (daysInMonth === 30) {
+        // إزالة اليوم 30 من أيام الطوارئ وإضافة اليوم 29 إذا لم يكن موجودًا
+        currentEmergencyDays = currentEmergencyDays.filter(day => day !== 30);
+        if (!currentEmergencyDays.includes(29)) {
+            currentEmergencyDays.push(29);
+            currentEmergencyDays.sort((a, b) => a - b); // لفرز الأيام
         }
+        console.log("تم نقل يوم الطوارئ من اليوم 30 إلى اليوم 29 لأن الشهر 30 يومًا");
     }
     
     scheduleTable = [];
     
+    // إنشاء جدول الشهر الحالي مع بدء كل شهر بالشخص الأول
     for (let i = 0; i < daysInMonth; i++) {
         const date = new Date(year, month, i + 1);
         let start = new Date(year, month, i, 17, 0, 0);
@@ -810,13 +816,14 @@ function generateSchedule() {
         
         let personName = '', noteText = '', isEmergency = false;
 
-        if (emergencyDays.includes(i + 1)) {
+        if (currentEmergencyDays.includes(i + 1)) {
             personName = 'يوم طوارئ';
             noteText = '';
             isEmergency = true;
         } else {
-            const personIndex = dayCounter % people.length;
-            personName = people[personIndex];
+            // استخدام نفس الترتيب دائماً بغض النظر عن طول الشهر، مع بدء كل شهر من الأول
+            const personIndex = dayCounter % currentPeople.length;
+            personName = currentPeople[personIndex];
             noteText = '';
             dayCounter++;
         }
@@ -824,6 +831,7 @@ function generateSchedule() {
         scheduleTable.push({ date, personName, start, end, note: noteText, isEmergency });
     }
 
+    // عرض الجدول في الصفحة
     scheduleTable.forEach(entry => {
         const row = document.createElement('tr');
         const nowDate = new Date();
@@ -947,4 +955,3 @@ window.onload = function() {
 
 </body>
 </html>
-
