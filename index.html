@@ -85,12 +85,44 @@
       transition: height 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
       z-index: 2;
   }
+
+  /* خط سياسة 34% مع توضيح إيقاف المحبس */
+  .policy-line-34 {
+      position: absolute;
+      width: 100%;
+      height: 4px;
+      background-color: var(--warning-color);
+      z-index: 10;
+      top: 66%;
+      box-shadow: 0 0 8px rgba(255, 87, 34, 0.8);
+      animation: blink 2s infinite;
+  }
   
   @keyframes blink {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.6; }
   }
   
+  .policy-line-34::after {
+      content: "34% - إيقاف المحبس تلقائياً";
+      position: absolute;
+      right: -15px;
+      top: -45px;
+      background: var(--warning-color);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: bold;
+      white-space: nowrap;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+      text-align: center;
+      line-height: 1.4;
+      z-index: 20;
+  }
+  
+ 
+
   /* أنماط لوحة مستوى الماء */
   .advanced-water-display {
       animation: fadeIn 0.6s ease;
@@ -206,36 +238,6 @@
   .person-name {
       color: var(--primary-color);
       text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-  }
-  
-  /* علامة خضراء تنبض بجانب اسم الشخص في الجدول */
-  .active-indicator {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      background-color: #4CAF50;
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-      box-shadow: 0 0 0 rgba(76, 175, 80, 0.4);
-      margin-right: 8px;
-      vertical-align: middle;
-  }
-  
-  @keyframes pulse {
-      0% {
-          transform: scale(0.95);
-          box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
-      }
-      
-      70% {
-          transform: scale(1);
-          box-shadow: 0 0 0 6px rgba(76, 175, 80, 0);
-      }
-      
-      100% {
-          transform: scale(0.95);
-          box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
-      }
   }
   
   .countdown-container {
@@ -442,6 +444,23 @@
       border: 1px solid #e0e0e0;
   }
   
+  /* توضيح إضافي أسفل الخزان */
+  .policy-notice {
+      text-align: center;
+      margin-top: 15px;
+      padding: 12px;
+      background: linear-gradient(to right, #FFF3E0, #FFECB3);
+      border-radius: 10px;
+      border-right: 4px solid var(--warning-color);
+      font-size: 14px;
+      color: #5D4037;
+      box-shadow: 0 3px 10px rgba(255,87,34,0.1);
+  }
+  
+  .policy-notice strong {
+      color: var(--warning-color);
+  }
+  
   /* زر إضافة التنبيه */
   .add-reminder-btn {
       display: block;
@@ -555,11 +574,6 @@
       #timer-text {
           font-size: 20px;
       }
-      
-      .active-indicator {
-          width: 8px;
-          height: 8px;
-      }
   }
   
   @media (max-width: 480px) {
@@ -576,10 +590,36 @@
           padding: 15px;
       }
   }
+  
+  /* رسالة مؤقتة */
+  .temp-message {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(to right, var(--warning-color), #E64A19);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      z-index: 10000;
+      animation: slideInRight 0.5s ease, fadeOut 0.5s ease 2.5s;
+      max-width: 300px;
+      font-weight: bold;
+      text-align: center;
+  }
+  
+  @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+  }
+  
+  @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+  }
 </style>
 </head>
 <body>
-
 
 </div>
 
@@ -590,7 +630,12 @@
       
       <div class="tank-container">
         <img src="https://i.postimg.cc/fyPGh4kx/Chat-GPT-Image-Oct-19-2025-10-26-24-PM.png" alt="خزان ماء" class="tank-image">
+       
+        <div </div>
         <div class="water-level" id="waterLevel"></div>
+      </div>
+      
+
       </div>
       
       <div class="water-stats">
@@ -738,6 +783,7 @@ const AUTHORIZED_FOR_WATER_LEVEL = [
     "علي يحيى",
     "أحمد مفرح",
     "يحيى مفرح",
+    "محمد جبار",
     "جابر يحيى",
     "يوم طواري",
     "حسين يحيى"
@@ -746,9 +792,8 @@ const AUTHORIZED_FOR_WATER_LEVEL = [
 // دالة للتحقق إذا كان الشخص مصرحاً له برؤية مستوى الماء
 function isAuthorizedForWaterLevel(personName) {
     if (!personName) return false;
-    const normalizedPerson = personName.trim().toLowerCase();
     return AUTHORIZED_FOR_WATER_LEVEL.some(name => 
-        name.toLowerCase() === normalizedPerson
+        name.toLowerCase() === personName.toLowerCase()
     );
 }
 
@@ -769,32 +814,20 @@ function checkWaterLevelAccess() {
         if (typeof refreshWaterData === 'function') {
             refreshWaterData();
         }
+        
+        // إظهار رسالة ترحيب
+        if (currentPerson !== "جارٍ التحديد..." && currentPerson !== "لا يوجد سَقْيَة الآن") {
+            showTemporaryMessage(`🔓 مستوى الماء متاح لك الآن`, 3000);
+        }
     } else {
         // إخفاء قسم مستوى الماء
         waterSection.style.display = 'none';
-    }
-}
-
-// دالة لعرض الرسائل المؤقتة
-function showTemporaryMessage(message, duration) {
-    // إزالة أي رسالة سابقة
-    const existingMessage = document.querySelector('.temp-message');
-    if (existingMessage) {
-        existingMessage.remove();
-    }
-    
-    // إنشاء رسالة جديدة
-    const messageDiv = document.createElement('div');
-    messageDiv.className = 'temp-message';
-    messageDiv.textContent = message;
-    document.body.appendChild(messageDiv);
-    
-    // إزالة الرسالة بعد المدة المحددة
-    setTimeout(() => {
-        if (messageDiv.parentNode) {
-            messageDiv.parentNode.removeChild(messageDiv);
+        
+        // إظهار رسالة للمستخدمين غير المصرح لهم
+        if (currentPerson && currentPerson !== "جارٍ التحديد..." && currentPerson !== "لا يوجد سَقْيَة الآن") {
+            showTemporaryMessage(`🔒 مستوى الماء غير متاح. يظهر فقط للأشخاص المصرح لهم`, 4000);
         }
-    }, duration);
+    }
 }
 
 // ============================================================================
@@ -1006,14 +1039,7 @@ function generateSchedule() {
             dayCounter++;
         }
         
-        scheduleTable.push({ 
-            date, 
-            personName, 
-            start, 
-            end, 
-            note: noteText, 
-            isEmergency 
-        });
+        scheduleTable.push({ date, personName, start, end, note: noteText, isEmergency });
     }
 
     // عرض الجدول في الصفحة
@@ -1035,9 +1061,7 @@ function generateSchedule() {
         row.innerHTML = `
             <td>${getDayName(entry.date)}</td>
             <td>${entry.date.toLocaleDateString('ar-EG', { month: 'long', day: 'numeric' })}</td>
-            <td>
-                ${entry.personName}
-            </td>
+            <td>${entry.personName}</td>
             <td>
                 ${entry.note}
                 <button class="detail-btn" onclick="showDetails('${entry.personName}', '${entry.start.toISOString()}', '${entry.end.toISOString()}', '${entry.note}', ${entry.isEmergency})">تفاصيل</button>
@@ -1064,39 +1088,10 @@ function updateCurrentSchedule() {
         }
     }
     
-    const currentPersonName = cs ? cs.personName : "لا يوجد سَقْيَة الآن";
-    document.getElementById('currentPerson').textContent = currentPersonName;
-    
-    // تحديث علامة النبض الخضراء في الجدول
-    updateActiveIndicator();
+    document.getElementById('currentPerson').textContent = cs ? cs.personName : "لا يوجد سَقْيَة الآن";
     
     // التحقق من صلاحية عرض مستوى الماء عند تحديث الجدول
     checkWaterLevelAccess();
-}
-
-// دالة لتحديث المؤشر النابض في الجدول
-function updateActiveIndicator() {
-    // إزالة جميع المؤشرات السابقة
-    const allIndicators = document.querySelectorAll('.active-indicator');
-    allIndicators.forEach(indicator => indicator.remove());
-    
-    // إضافة مؤشر للصف المحدد (الشخص الذي يستقي حالياً)
-    const selectedRows = document.querySelectorAll('tr.selected');
-    selectedRows.forEach(row => {
-        const nameCell = row.querySelector('td:nth-child(3)');
-        if (nameCell) {
-            // إنشاء المؤشر النابض
-            const indicator = document.createElement('span');
-            indicator.className = 'active-indicator';
-            indicator.title = 'يستقي حالياً';
-            
-            // إضافة المؤشر في بداية اسم الشخص
-            const currentName = nameCell.textContent.trim();
-            nameCell.innerHTML = '';
-            nameCell.appendChild(indicator);
-            nameCell.appendChild(document.createTextNode(` ${currentName}`));
-        }
-    });
 }
 
 // دالة لإضافة التنبيه إلى تقويم جوجل
