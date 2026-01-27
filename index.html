@@ -621,6 +621,11 @@
 </head>
 <body>
 
+<!-- رابط الموقع الجديد -->
+<div class="new-site-link">
+
+  <br><br>
+
 </div>
 
 <!-- قسم مستوى الماء (سيتم إظهاره فقط للأشخاص المصرح لهم) -->
@@ -1078,8 +1083,19 @@ function updateCurrentSchedule() {
     const cs = scheduleTable.find(e => now >= e.start && now < e.end);
     currentSchedule = cs || null;
     
+    // البحث عن الموعد التالي بشكل أكثر دقة
     nextSchedule = null;
-    if (scheduleTable.length > 0) {
+    
+    // أولاً: البحث عن الموعد التالي في نفس اليوم
+    if (cs) {
+        // إذا كان هناك موعد حالي، فإن الموعد التالي هو نفس الوقت في اليوم التالي
+        const tomorrow = new Date(cs.end);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        nextSchedule = scheduleTable.find(e => e.date.getDate() === tomorrow.getDate());
+    }
+    
+    // إذا لم يتم العثور على الموعد التالي، ابحث عن أول موعد في المستقبل
+    if (!nextSchedule && scheduleTable.length > 0) {
         for (let i = 0; i < scheduleTable.length; i++) {
             if (now < scheduleTable[i].start) {
                 nextSchedule = scheduleTable[i];
@@ -1088,10 +1104,57 @@ function updateCurrentSchedule() {
         }
     }
     
+    // إذا لم يتم العثور على موعد تالي، استخدم أول موعد في الشهر القادم
+    if (!nextSchedule && scheduleTable.length > 0) {
+        nextSchedule = scheduleTable[0];
+    }
+    
     document.getElementById('currentPerson').textContent = cs ? cs.personName : "لا يوجد سَقْيَة الآن";
     
     // التحقق من صلاحية عرض مستوى الماء عند تحديث الجدول
     checkWaterLevelAccess();
+}
+
+// دالة محسنة لعرض الوقت المتبقي
+function updateRemainingTime() {
+    const now = new Date();
+    
+    if (!nextSchedule) {
+        document.getElementById('timer-text').textContent = "--:--:--";
+        document.querySelector('.countdown-circle').style.background = `conic-gradient(var(--primary-color) 0%, #e0e0e0 0%)`;
+        return;
+    }
+    
+    const diff = nextSchedule.start - now;
+    
+    if (diff <= 0) {
+        // إذا انتهى الوقت، تحديث الجدول
+        document.getElementById('timer-text').textContent = "00:00:00";
+        document.querySelector('.countdown-circle').style.background = `conic-gradient(var(--primary-color) 100%, #e0e0e0 100%)`;
+        
+        // إعادة تحميل الجدول بعد ثانية
+        setTimeout(() => {
+            generateSchedule();
+        }, 1000);
+        return;
+    }
+    
+    // حساب الساعات والدقائق والثواني
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    
+    // تحديث نص المؤقت
+    document.getElementById('timer-text').textContent = 
+        `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+    // حساب النسبة المئوية للدائرة (الوقت المتبقي من 24 ساعة)
+    const hoursDiff = diff / (1000 * 60 * 60);
+    const percentage = Math.max(0, Math.min(100, (24 - hoursDiff) / 24 * 100));
+    
+    // تحديث الدائرة
+    document.querySelector('.countdown-circle').style.background = 
+        `conic-gradient(var(--primary-color) ${percentage}%, #e0e0e0 ${percentage}%)`;
 }
 
 // دالة لإضافة التنبيه إلى تقويم جوجل
@@ -1194,36 +1257,16 @@ window.onclick = function(event) {
     }
 }
 
-function updateRemainingTime() {
-    const now = new Date();
-    updateCurrentSchedule();
+// دالة لعرض رسائل مؤقتة
+function showTemporaryMessage(message, duration = 3000) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'temp-message';
+    messageDiv.textContent = message;
+    document.body.appendChild(messageDiv);
     
-    if (!nextSchedule) {
-        document.getElementById('timer-text').textContent = "--:--:--";
-        document.querySelector('.countdown-circle').style.background = `conic-gradient(var(--primary-color) 0%, transparent 0%)`;
-        return;
-    }
-    
-    const diff = nextSchedule.start - now;
-    
-    if (diff <= 0) {
-        document.getElementById('timer-text').textContent = "00:00:00";
-        document.querySelector('.countdown-circle').style.background = `conic-gradient(var(--primary-color) 100%, transparent 100%)`;
-        generateSchedule();
-        return;
-    }
-    
-    const hours = Math.floor(diff / 1000 / 60 / 60);
-    const minutes = Math.floor((diff / 1000 / 60) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
-    
-    document.getElementById('timer-text').textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    
-    const totalDuration = nextSchedule.start - (new Date(nextSchedule.start.getFullYear(), nextSchedule.start.getMonth(), nextSchedule.start.getDate(), 0, 0, 0));
-    const percentage = 100 - (diff / totalDuration) * 100;
-    const adjustedPercentage = Math.min(Math.max(percentage, 0), 100);
-    
-    document.querySelector('.countdown-circle').style.background = `conic-gradient(var(--primary-color) ${adjustedPercentage}%, transparent ${adjustedPercentage}%)`;
+    setTimeout(() => {
+        messageDiv.remove();
+    }, duration);
 }
 
 // تهيئة الصفحة
