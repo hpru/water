@@ -29,7 +29,6 @@
       line-height: 1.6;
   }
   
-  /* تنبيه الطوارئ الكبير */
   .emergency-alert {
       max-width: 900px;
       margin: 20px auto;
@@ -48,32 +47,14 @@
   }
   
   .emergency-alert::before {
-      content: "حساس مستوى الماء لايعمل";
-      position: absolute;
-      top: 20px;
-      right: 25px;
-      font-size: 28px;
-  }
-  
-  .emergency-alert::after {
-      content: "⚠️";
-      position: absolute;
-      top: 20px;
-      left: 25px;
+      content: "⚠️ حساس قياس مستوى الماء لا يعمل";
+      display: block;
       font-size: 28px;
   }
   
   @keyframes pulse-alert {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.02); }
-  }
-  
-  .emergency-alert span {
-      display: block;
-      font-size: 18px;
-      margin-top: 10px;
-      font-weight: normal;
-      color: #E65100;
   }
   
   .section-container {
@@ -96,14 +77,6 @@
       margin-bottom: 25px;
       color: var(--primary-color);
       font-weight: 700;
-  }
-  
-  h1 {
-      font-size: 28px;
-      padding-bottom: 10px;
-      border-bottom: 3px solid var(--secondary-color);
-      display: inline-block;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
   }
 
   .tank-container {
@@ -133,21 +106,6 @@
       z-index: 2;
   }
   
-  @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.6; }
-  }
-  
-  /* أنماط لوحة مستوى الماء */
-  .advanced-water-display {
-      animation: fadeIn 0.6s ease;
-  }
-  
-  @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-  }
-  
   .water-stats {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -163,19 +121,6 @@
       border-left: 5px solid var(--primary-color);
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-  }
-  
-  .stat-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
-      transform: translateX(-100%);
   }
   
   .stat-card:hover {
@@ -183,20 +128,11 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.15);
   }
   
-  .stat-card:hover::before {
-      animation: shimmer 1.5s;
-  }
-  
-  @keyframes shimmer {
-      100% { transform: translateX(100%); }
-  }
-  
   .stat-value {
       font-size: 1.8em;
       font-weight: 800;
       color: var(--primary-color);
       margin-bottom: 5px;
-      text-shadow: 0 1px 1px rgba(0,0,0,0.1);
   }
   
   .stat-label {
@@ -222,22 +158,30 @@
       color: white;
       font-weight: bold;
       cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0,121,107,0.3);
-  }
-  
-  .water-controls button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(0,121,107,0.4);
-      background: linear-gradient(to right, #00695C, #004D40);
-  }
-  
-  .water-controls button:active {
-      transform: translateY(1px);
-      box-shadow: 0 2px 5px rgba(0,121,107,0.3);
   }
 
-  /* جدول السقاية */
+  .maintenance-box {
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #0277BD;
+      background: #E1F5FE;
+      border: 2px dashed #03A9F4;
+      border-radius: 12px;
+  }
+
+  .unauth-box {
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #D84315;
+      background: #FFF3E0;
+      border: 2px dashed #FF5722;
+      border-radius: 12px;
+  }
+
   .person-box {
       text-align: center;
       margin: 20px 0;
@@ -252,10 +196,8 @@
   
   .person-name {
       color: var(--primary-color);
-      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
   }
   
-  /* علامة خضراء تنبض بجانب اسم الشخص في الجدول */
   .active-indicator {
       display: inline-block;
       width: 10px;
@@ -263,26 +205,14 @@
       background-color: #4CAF50;
       border-radius: 50%;
       animation: pulse 2s infinite;
-      box-shadow: 0 0 0 rgba(76, 175, 80, 0.4);
       margin-right: 8px;
       vertical-align: middle;
   }
   
   @keyframes pulse {
-      0% {
-          transform: scale(0.95);
-          box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
-      }
-      
-      70% {
-          transform: scale(1);
-          box-shadow: 0 0 0 6px rgba(76, 175, 80, 0);
-      }
-      
-      100% {
-          transform: scale(0.95);
-          box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
-      }
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(76, 175, 80, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
   }
   
   .countdown-container {
@@ -303,25 +233,6 @@
       justify-content: center;
       margin-bottom: 15px;
       box-shadow: 0 8px 20px rgba(0, 121, 107, 0.3);
-      transition: all 0.3s ease;
-  }
-  
-  .countdown-circle:hover {
-      transform: scale(1.05);
-      box-shadow: 0 10px 25px rgba(0, 121, 107, 0.4);
-  }
-  
-  .countdown-circle::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 120px;
-      height: 120px;
-      background: #fff;
-      border-radius: 50%;
-      box-shadow: inset 0 3px 8px rgba(0,0,0,0.1);
   }
   
   #timer-text {
@@ -330,7 +241,6 @@
       font-weight: bold;
       color: var(--primary-color);
       z-index: 1;
-      text-shadow: 0 1px 1px rgba(0,0,0,0.1);
   }
   
   .countdown-label {
@@ -358,29 +268,48 @@
       padding: 14px 12px;
       border: 1px solid #E0E0E0;
       text-align: center;
-      transition: background-color 0.2s;
   }
   
   th {
       background: linear-gradient(to bottom, var(--primary-color), #00695C);
       color: var(--text-light);
       font-weight: 700;
-      font-size: 15px;
   }
   
-  tr:nth-child(even) {
-      background-color: #F9F9F9;
+  tr:nth-child(even) { background-color: #F9F9F9; }
+  tr:hover { background-color: #F0F7FF; }
+  
+  /* ============================================
+     تلوين اليوم الحالي بالكامل (دائرة على اليوم)
+     ============================================ */
+  tr.today-row {
+      background: linear-gradient(to right, #FFD54F, #FFC107) !important;
+      font-weight: bold;
+      color: #4E342E !important;
+      border: 3px solid #FF6F00;
+      box-shadow: 0 0 20px rgba(255, 193, 7, 0.5);
+      border-radius: 12px;
   }
   
-  tr:hover {
-      background-color: #F0F7FF;
+  tr.today-row td {
+      color: #4E342E !important;
+      font-weight: 700;
+  }
+  
+  tr.today-row .detail-btn {
+      background: linear-gradient(to bottom, #4E342E, #3E2723);
+      color: #FFD54F;
   }
   
   tr.selected {
       background: linear-gradient(to right, var(--accent-color), #FFB300);
       font-weight: bold;
       color: #5D4037;
-      box-shadow: inset 0 0 10px rgba(255,193,7,0.3);
+  }
+  
+  tr.fill-period {
+      background: linear-gradient(to right, #E1F5FE, #B3E5FC);
+      color: #01579B;
   }
   
   tr.past {
@@ -390,10 +319,9 @@
   }
   
   tr.emergency {
-      background: linear-gradient(to right, #FFECB3, #FFE082);
+      background: linear-gradient(to right, #FFF3E0, #FFE082);
       font-weight: bold;
-      color: #FF8F00;
-      box-shadow: inset 0 0 10px rgba(255,193,7,0.3);
+      color: #E65100;
   }
   
   .detail-btn {
@@ -406,26 +334,14 @@
       font-size: 13px;
       margin-top: 5px;
       font-weight: 600;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 8px rgba(0,121,107,0.3);
-  }
-  
-  .detail-btn:hover {
-      background: linear-gradient(to bottom, #00695C, #004D40);
-      transform: translateY(-2px);
-      box-shadow: 0 5px 12px rgba(0,121,107,0.4);
   }
   
   #detailsModal {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.7);
-      justify-content: center;
-      align-items: center;
+      justify-content: center; align-items: center;
       z-index: 1000;
       backdrop-filter: blur(3px);
   }
@@ -434,34 +350,18 @@
       background: white;
       padding: 30px;
       border-radius: 16px;
-      max-width: 90vw;
       width: 500px;
+      max-width: 90vw;
       text-align: right;
       position: relative;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-      max-height: 85vh;
-      overflow-y: auto;
-      animation: modalFadeIn 0.4s ease;
-  }
-  
-  @keyframes modalFadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
   }
   
   #closeModal {
       position: absolute;
-      top: 15px;
-      left: 20px;
+      top: 15px; left: 20px;
       cursor: pointer;
       font-size: 28px;
       font-weight: bold;
-      color: #555;
-      transition: color 0.2s;
-  }
-  
-  #closeModal:hover {
-      color: var(--warning-color);
   }
   
   .modal-row {
@@ -475,25 +375,18 @@
   .modal-label {
       font-weight: 700;
       color: var(--primary-color);
-      font-size: 16px;
       margin-bottom: 8px;
   }
   
   .modal-value {
-      flex: 1;
-      text-align: right;
-      font-size: 16px;
+      background: #f9f9f9;
       padding: 10px 15px;
       border-radius: 8px;
-      background: #f9f9f9;
       border: 1px solid #e0e0e0;
   }
   
-  /* زر إضافة التنبيه */
   .add-reminder-btn {
-      display: block;
       width: 100%;
-      margin-top: 20px;
       padding: 14px;
       background: linear-gradient(to right, var(--info-color), #1976D2);
       color: white;
@@ -502,26 +395,8 @@
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(33,150,243,0.3);
   }
   
-  .add-reminder-btn:hover {
-      background: linear-gradient(to right, #1976D2, #0D47A1);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(33,150,243,0.4);
-  }
-  
-  .add-reminder-btn:active {
-      transform: translateY(1px);
-      box-shadow: 0 2px 8px rgba(33,150,243,0.3);
-  }
-  
-  .add-reminder-btn i {
-      margin-left: 8px;
-  }
-  
-  /* رابط الموقع الجديد */
   .new-site-link {
       border: 2px solid var(--warning-color);
       padding: 15px;
@@ -529,11 +404,9 @@
       background-color: #FFF3E0;
       color: #D84315;
       font-weight: bold;
-      font-size: 16px;
       text-align: center;
       margin: 20px auto;
       max-width: 900px;
-      box-shadow: 0 4px 12px rgba(255,87,34,0.1);
   }
   
   .new-site-link a {
@@ -543,167 +416,58 @@
       padding: 15px 30px;
       border-radius: 12px;
       font-weight: bold;
-      font-size: 1.2em;
       text-decoration: none;
-      box-shadow: 0 6px 15px rgba(13,110,253,0.3);
-      transition: all 0.3s ease;
       margin-top: 10px;
   }
   
-  .new-site-link a:hover {
-      background: linear-gradient(to right, #0b5ed7, #0a58ca);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(13,110,253,0.4);
-  }
-  
-  .new-site-link a:active {
-      transform: translateY(1px);
-      box-shadow: 0 3px 10px rgba(13,110,253,0.3);
-  }
-  
-  /* تحسينات للهواتف */
   @media (max-width: 768px) {
-      .emergency-alert {
-          font-size: 18px;
-          padding: 20px;
-      }
-      
-      .emergency-alert::before,
-      .emergency-alert::after {
-          font-size: 22px;
-          top: 15px;
-      }
-      
-      .section-container {
-          padding: 15px;
-          margin: 10px auto;
-      }
-      
-      .water-stats {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 12px;
-      }
-      
-      .stat-card {
-          padding: 15px;
-      }
-      
-      .stat-value {
-          font-size: 1.5em;
-      }
-      
-      table {
-          font-size: 12px;
-      }
-      
-      th, td {
-          padding: 10px 8px;
-      }
-      
-      .countdown-circle {
-          width: 120px;
-          height: 120px;
-      }
-      
-      .countdown-circle::before {
-          width: 100px;
-          height: 100px;
-      }
-      
-      #timer-text {
-          font-size: 20px;
-      }
-      
-      .active-indicator {
-          width: 8px;
-          height: 8px;
-      }
-  }
-  
-  @media (max-width: 480px) {
-      .emergency-alert {
-          font-size: 16px;
-          padding: 15px;
-      }
-      
-      .emergency-alert span {
-          font-size: 14px;
-      }
-      
-      .water-stats {
-          grid-template-columns: 1fr;
-      }
-      
-      .water-controls {
-          flex-direction: column;
-      }
-      
-      .person-box {
-          font-size: 18px;
-          padding: 15px;
-      }
+      .water-stats { grid-template-columns: repeat(2, 1fr); }
   }
 </style>
 </head>
 <body>
 
-<!-- تنبيه أيام الطوارئ الكبير -->
-<div class="emergency-alert">
-    
-    <span></span>
-</div>
+<div class="emergency-alert"></div>
 
+<div class="new-site-link">
   <br><br>
-
+  <a href="https://hpru.github.io/water/" target="_blank">
+    اضغط هنا للموقع الجديد: hpru.github.io/water
+  </a>
 </div>
 
-<!-- قسم مستوى الماء (سيتم إظهاره فقط للأشخاص المصرح لهم) -->
-<div class="section-container" id="waterLevelSection" style="display: none;">
-  <div class="advanced-water-display">
+<div class="section-container" id="waterLevelSection">
+  <div id="authorizedWaterContent" style="display: none;" class="advanced-water-display">
       <h2>📊 مستوى الماء الحالي</h2>
-      
       <div class="tank-container">
         <img src="https://i.postimg.cc/fyPGh4kx/Chat-GPT-Image-Oct-19-2025-10-26-24-PM.png" alt="خزان ماء" class="tank-image">
         <div class="water-level" id="waterLevel"></div>
       </div>
-      
       <div class="water-stats">
-        <div class="stat-card">
-          <div class="stat-value" id="percentDisplay">0%</div>
-          <div class="stat-label">النسبة المئوية</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value" id="litersDisplay">0 لتر</div>
-          <div class="stat-label">الحجم الحالي</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value" id="signalStrength">0</div>
-          <div class="stat-label">قوة الإشارة</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value" id="distanceDisplay">0 سم</div>
-          <div class="stat-label">المسافة</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value" id="lastUpdateTime">--:--:--</div>
-          <div class="stat-label">آخر تحديث</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value" id="totalCapacity">0 لتر</div>
-          <div class="stat-label">السعة الكلية</div>
-        </div>
+        <div class="stat-card"><div class="stat-value" id="percentDisplay">0%</div><div class="stat-label">النسبة المئوية</div></div>
+        <div class="stat-card"><div class="stat-value" id="litersDisplay">0 لتر</div><div class="stat-label">الحجم الحالي</div></div>
+        <div class="stat-card"><div class="stat-value" id="signalStrength">0</div><div class="stat-label">قوة الإشارة</div></div>
+        <div class="stat-card"><div class="stat-value" id="distanceDisplay">0 سم</div><div class="stat-label">المسافة</div></div>
+        <div class="stat-card"><div class="stat-value" id="lastUpdateTime">--:--:--</div><div class="stat-label">آخر تحديث</div></div>
+        <div class="stat-card"><div class="stat-value" id="totalCapacity">0 لتر</div><div class="stat-label">السعة الكلية</div></div>
       </div>
-      
       <div class="water-controls">
-        <button class="btn-primary" onclick="refreshWaterData()">🔄 تحديث البيانات</button>
+        <button onclick="refreshWaterData()">🔄 تحديث البيانات</button>
       </div>
+  </div>
+  
+  <div id="fillingWaterContent" style="display: none;" class="maintenance-box">
+      💧 يتم الآن تعبئة الخزان للشخص التالي
+  </div>
+
+  <div id="unauthorizedWaterContent" class="unauth-box">
+      ⚙️ يتم الان تجهيز الخزان
   </div>
 </div>
 
-<!-- باقي الأقسام -->
 <div class="section-container">
   <div class="person-box">
-    سَقْوُهُ اليوم: <span id="currentPerson" class="person-name">جارٍ التحديد...</span>
+    الوضع الحالي: <span id="currentPerson" class="person-name">...</span>
   </div>
   <div class="countdown-container">
     <div class="countdown-circle">
@@ -719,392 +483,245 @@
       <tr>
         <th>اليوم</th>
         <th>التاريخ</th>
-        <th>الاسم</th>
-        <th>ملاحظة</th>
+        <th>الاسم والوضع</th>
+        <th>المدة</th>
+        <th>خيارات</th>
       </tr>
     </thead>
     <tbody id="scheduleBody"></tbody>
   </table>
 </div>
 
-<div class="section-container">
-  <h2>المؤهلون لأيام الطوارئ</h2>
-  <p>الأشخاص المذكورون في الجدول أدناه فقط هم المؤهلون لاستخدام أيام الطوارئ.</p>
-  <table>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>الاسم</th>
-        <th>مدة السقيا</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>1</td><td>يحيى جابر</td><td>1 ساعة</td></tr>
-      <tr><td>2</td><td></td><td></td></tr>
-      <tr><td>3</td><td>خزانات الجيران في الحي</td><td>1 ساعة</td></tr>
-    </tbody>
-  </table>
-  <div class="policy">
-    <br>
-    <ul>
-      <li>مدة السقيا في حالة الطوارئ لا تتجاوز <strong>ساعة واحدة فقط</strong></li>
-      <li>لا يتم منح أكثر من يوم طوارئ إلا بعد التأكد من الحاجة الحقيقية</li>
-      <li>أي تجاوز أو تلاعب يتم استبعاده مباشرة ودون تنبيه</li>
-    </ul>
-  </div>
-</div>
-
-<!-- نافذة التفاصيل المعدلة -->
 <div id="detailsModal">
   <div id="detailsModalContent">
     <span id="closeModal">&times;</span>
-    <div class="modal-header">
-      <h2>تفاصيل السَقْيَة</h2>
-    </div>
-    
-    <div class="modal-row">
-      <span class="modal-label">اسم الشخص:</span>
-      <span class="modal-value" id="modalPerson"></span>
-    </div>
-    
-    <div class="modal-row">
-      <span class="modal-label">التاريخ:</span>
-      <span class="modal-value" id="modalDate"></span>
-    </div>
-    
-    <div class="modal-row">
-      <span class="modal-label">وقت بدء السَقْيَة:</span>
-      <span class="modal-value" id="modalStart"></span>
-    </div>
-    
-    <div class="modal-row">
-      <span class="modal-label">وقت انتهاء السَقْيَة:</span>
-      <span class="modal-value" id="modalEnd"></span>
-    </div>
-    
-    <div class="modal-row">
-      <span class="modal-label">حالة السَقْيَة:</span>
-      <span class="modal-value" id="modalStatus"></span>
-    </div>
-    
-    <div class="modal-row">
-      <span class="modal-label">ملاحظات:</span>
-      <span class="modal-value" id="modalNote"></span>
-    </div>
-    
-    <!-- زر إضافة التنبيه لتقويم جوجل -->
-    <button class="add-reminder-btn" id="addReminderBtn">
-      <i>📅</i> أضف تنبيه في تقويم جوجل (10 دقائق قبل)
-    </button>
+    <h2>تفاصيل الفترة</h2>
+    <div class="modal-row"><span class="modal-label">الاسم / الوضع:</span><span class="modal-value" id="modalPerson"></span></div>
+    <div class="modal-row"><span class="modal-label">التاريخ:</span><span class="modal-value" id="modalDate"></span></div>
+    <div class="modal-row"><span class="modal-label">وقت البدء:</span><span class="modal-value" id="modalStart"></span></div>
+    <div class="modal-row"><span class="modal-label">وقت الانتهاء:</span><span class="modal-value" id="modalEnd"></span></div>
+    <div class="modal-row"><span class="modal-label">حالة الفترة:</span><span class="modal-value" id="modalStatus"></span></div>
+    <button class="add-reminder-btn" id="addReminderBtn">📅 أضف تنبيه في تقويم جوجل (10 دقائق قبل)</button>
   </div>
 </div>
 
 <script>
-// ============================================================================
-// نظام التحكم في إظهار مستوى الماء حسب الشخص الحالي
-// ============================================================================
-
-// قائمة المصرح لهم برؤية مستوى الماء (يظهر فقط لهم)
-
-// دالة للتحقق إذا كان الشخص مصرحاً له برؤية مستوى الماء
-function isAuthorizedForWaterLevel(personName) {
-    if (!personName) return false;
-    const normalizedPerson = personName.trim().toLowerCase();
-    return AUTHORIZED_FOR_WATER_LEVEL.some(name => 
-        name.toLowerCase() === normalizedPerson
-    );
-}
-
-// دالة للتحقق من صلاحية الشخص الحالي وعرض مستوى الماء
-function checkWaterLevelAccess() {
-    const currentPersonElement = document.getElementById('currentPerson');
-    const currentPerson = currentPersonElement ? currentPersonElement.textContent.trim() : '';
-    const waterSection = document.getElementById('waterLevelSection');
-    
-    // التحقق إذا كان الشخص الحالي من المصرح لهم
-    const isAuthorized = isAuthorizedForWaterLevel(currentPerson);
-    
-    if (isAuthorized) {
-        // إظهار قسم مستوى الماء
-        waterSection.style.display = 'block';
-        
-        // تحديث بيانات الماء إذا كانت مخفية سابقاً
-        if (typeof refreshWaterData === 'function') {
-            refreshWaterData();
-        }
-    } else {
-        // إخفاء قسم مستوى الماء
-        waterSection.style.display = 'none';
-    }
-}
-
-// دالة لعرض الرسائل المؤقتة
-function showTemporaryMessage(message, duration) {
-    // إزالة أي رسالة سابقة
-    const existingMessage = document.querySelector('.temp-message');
-    if (existingMessage) {
-        existingMessage.remove();
-    }
-    
-    // إنشاء رسالة جديدة
-    const messageDiv = document.createElement('div');
-    messageDiv.className = 'temp-message';
-    messageDiv.textContent = message;
-    document.body.appendChild(messageDiv);
-    
-    // إزالة الرسالة بعد المدة المحددة
-    setTimeout(() => {
-        if (messageDiv.parentNode) {
-            messageDiv.parentNode.removeChild(messageDiv);
-        }
-    }, duration);
-}
-
-// ============================================================================
-// تحسينات جمالية وإضافة خاصية التنبيه لتقويم جوجل
-// ============================================================================
-
-// إعدادات الخزان
-const TANK_CONFIG = {
-  height: 355,
-  diameter: 370,
-  shape: 'cylindrical'
-};
-
-let totalTankVolume = 0;
-
-// تهيئة عرض مستوى الماء
-function initializeWaterDisplay() {
-  totalTankVolume = calculateTankVolume();
-  document.getElementById('totalCapacity').textContent = Math.round(totalTankVolume).toLocaleString() + ' لتر';
-  fetchWaterData();
-  setInterval(fetchWaterData, 30000);
-}
-
-// حساب سعة الخزان
-function calculateTankVolume() {
-  const radius = TANK_CONFIG.diameter / 2;
-  if (TANK_CONFIG.shape === 'cylindrical') {
-    const volumeCm3 = Math.PI * Math.pow(radius, 2) * TANK_CONFIG.height;
-    return volumeCm3 / 1000;
-  }
-  return 0;
-}
-
-// حساب كمية الماء
-function calculateWaterVolume(distance) {
-  const waterHeight = TANK_CONFIG.height - distance;
-  if (waterHeight <= 0) return 0;
-  if (waterHeight > TANK_CONFIG.height) return totalTankVolume;
-  const radius = TANK_CONFIG.diameter / 2;
-  if (TANK_CONFIG.shape === 'cylindrical') {
-    const volumeCm3 = Math.PI * Math.pow(radius, 2) * waterHeight;
-    return volumeCm3 / 1000;
-  }
-  return 0;
-}
-
-// جلب بيانات الماء من Google Apps Script
-async function fetchWaterData() {
-  try {
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxppOlRtEYur9rESbp-9VWqm7JYxPe1TvAv4RzQCtlHsimI76xcKH_93AzwCEuhj8AK/exec';
-    
-    const response = await fetch(`${SCRIPT_URL}?operation=getLatest&t=${Date.now()}`);
-    
-    if (response.ok) {
-      const data = await response.json();
-      if (data.status === 'success') {
-        updateWaterDisplay(data.data);
-      } else {
-        updateWaterDisplay(generateMockData());
-      }
-    } else {
-      updateWaterDisplay(generateMockData());
-    }
-  } catch (error) {
-    console.error('Error fetching water data:', error);
-    updateWaterDisplay(generateMockData());
-  }
-}
-
-// توليد بيانات تجريبية
-function generateMockData() {
-  const distance = Math.floor(Math.random() * 200) + 100;
-  const volume = calculateWaterVolume(distance);
-  const level = (volume / totalTankVolume) * 100;
-  
-  return {
-    level: level,
-    distance: distance,
-    volume: volume,
-    strength: Math.floor(Math.random() * 500) + 100,
-    timestamp: new Date().toISOString(),
-    device: 'نظام مراقبة الماء'
-  };
-}
-
-// تحديث عرض الماء
-function updateWaterDisplay(data) {
-  let distance, level, volume;
-  
-  if (data.distance && data.distance > 0) {
-    distance = parseFloat(data.distance);
-    volume = calculateWaterVolume(distance);
-    level = (volume / totalTankVolume) * 100;
-  } else if (data.level && data.level > 0) {
-    level = parseFloat(data.level);
-    volume = (level / 100) * totalTankVolume;
-    distance = TANK_CONFIG.height - (level / 100) * TANK_CONFIG.height;
-  } else {
-    distance = Math.floor(Math.random() * 200) + 100;
-    volume = calculateWaterVolume(distance);
-    level = (volume / totalTankVolume) * 100;
-  }
-  
-  // تحديث واجهة المستخدم
-  document.getElementById('waterLevel').style.height = level + '%';
-  document.getElementById('percentDisplay').textContent = level.toFixed(1) + '%';
-  document.getElementById('litersDisplay').textContent = Math.round(volume).toLocaleString() + ' لتر';
-  
-  document.getElementById('signalStrength').textContent = data.strength || '0';
-  document.getElementById('distanceDisplay').textContent = distance.toFixed(1) + ' سم';
-  document.getElementById('lastUpdateTime').textContent = new Date().toLocaleTimeString('ar-SA');
-}
-
-// تحديث يدوي لبيانات الماء
-function refreshWaterData() {
-  fetchWaterData();
-}
-
-// ============================================================================
-// الكود الأصلي لجدول السقاية مع إضافة خاصية التنبيه
-// ============================================================================
-
+// ============================================================
+//  الأشخاص (جميعهم 12 ساعة)
+// ============================================================
 const people = [
     "مفرح عمضان", "محمد عمضان", "مفرح جابر", "يحيى بن جابر", "عبدالله محمد جابر",
-    "أحمد مفرح", "يحيى مفرح", "جابر يحيى","علي يحيى", "حسين يحيى", "محمد مفرح",
-    "علي جابر", "محمد يحيى", "محمد أحمد", "علي أحمد", "ماطر أحمد علي",
+    "أحمد مفرح", "يحيى مفرح", "جابر يحيى", "علي يحيى", "حسين يحيى", "محمد مفرح",
+    "علي جابر", "محمد يحيى", "محمد أحمد", "علي احمد", "ماطر أحمد علي",
     "قاسم جابر", "جابر حسين", "مفرح أحمد", "عبدالرحمن سالم", "جابر أحمد",
-    "أحمد بن يحيى", "أحمد شوعان", "محمد جبار", "home",
+    "أحمد بن يحيى", "أحمد شوعان", "محمد جبار", "home"
 ];
-let emergencyDays = [5, , 15, 20, 25, 30];
+
+// ============================================================
+//  الصلاحيات لعرض مستوى الماء
+// ============================================================
+const AUTHORIZED_FOR_WATER_LEVEL = ["محمد عمضان", "مفرح جابر", "حسين يحيى", "يحيى بن جابر"];
+
+// ============================================================
+//  أيام الطوارئ (ساعة واحدة 8-9 مساءً)
+// ============================================================
+const emergencyDays = [5, 15, 20, 25, 30];
+
+// ============================================================
+//  المتغيرات العامة
+// ============================================================
 let scheduleTable = [];
 let currentSchedule = null;
 let nextSchedule = null;
 let currentModalData = null;
+let currentDay = new Date().getDate();
 
-// التحقق إذا كان اليوم يوم طوارئ
-function isEmergencyDay(personName) {
-    return personName === "يوم طواري" || personName === "يوم طوارئ";
-}
+const TANK_CONFIG = { height: 355, diameter: 370, shape: 'cylindrical' };
+let totalTankVolume = (Math.PI * Math.pow((TANK_CONFIG.diameter / 2), 2) * TANK_CONFIG.height) / 1000;
 
+// ============================================================
+//  دوال مساعدة
+// ============================================================
 function getDayName(date) { 
-    const days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت']; 
-    return days[date.getDay()]; 
+    return ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'][date.getDay()]; 
 }
 
 function formatDateFull(date) {
-    const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
-    return date.toLocaleDateString('ar-EG', options);
+    return date.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
 }
 
 function formatDateTimeFull(date) {
-    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
-    return date.toLocaleDateString('ar-EG', options);
+    return date.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true });
 }
 
-// دالة محسنة لتوليد الجدول ديناميكياً مع بدء كل شهر بالشخص الأول
+// ============================================================
+//  إنشاء الجدول
+// ============================================================
 function generateSchedule() {
     const today = new Date();
     const year = today.getFullYear();
     const month = today.getMonth();
-    
-    // حساب عدد أيام الشهر الحالي ديناميكياً
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const tbody = document.getElementById('scheduleBody');
     tbody.innerHTML = '';
     
-    // بدء كل شهر جديد بالشخص الأول (مفرح عمضان)
-    let dayCounter = 0;
-    
-    // استبعاد "home" إذا كان الشهر 28 يومًا فقط
     let currentPeople = [...people];
     if (daysInMonth === 28) {
         currentPeople = currentPeople.filter(person => person !== "home");
-        console.log("تم استبعاد 'home' من الجدول لأن الشهر 28 يومًا");
     }
     
-    // استبعاد يوم الطوارئ في اليوم 30 إذا كان الشهر 30 يومًا ووضعه في اليوم 29
     let currentEmergencyDays = [...emergencyDays];
     if (daysInMonth === 30) {
-        // إزالة اليوم 30 من أيام الطوارئ وإضافة اليوم 29 إذا لم يكن موجودًا
         currentEmergencyDays = currentEmergencyDays.filter(day => day !== 30);
-        if (!currentEmergencyDays.includes(29)) {
-            currentEmergencyDays.push(29);
-            currentEmergencyDays.sort((a, b) => a - b); // لفرز الأيام
-        }
-        console.log("تم نقل يوم الطوارئ من اليوم 30 إلى اليوم 29 لأن الشهر 30 يومًا");
+        if (!currentEmergencyDays.includes(29)) currentEmergencyDays.push(29);
     }
     
     scheduleTable = [];
+    let personCounter = 0;
     
-    // إنشاء جدول الشهر الحالي مع بدء كل شهر بالشخص الأول
     for (let i = 0; i < daysInMonth; i++) {
         const date = new Date(year, month, i + 1);
-        let start = new Date(year, month, i, 17, 0, 0);
-        let end = new Date(year, month, i, 17, 0, 0);
-        end.setDate(end.getDate() + 1);
+        const isEmergency = currentEmergencyDays.includes(i + 1);
+        const isToday = (i + 1 === currentDay);
         
-        let personName = '', noteText = '', isEmergency = false;
-
-        if (currentEmergencyDays.includes(i + 1)) {
-            personName = 'يوم طواري';
-            noteText = '';
-            isEmergency = true;
+        if (isEmergency) {
+            // ============================================
+            //  أيام الطوارئ
+            // ============================================
+            
+            // 1. قبل الطوارئ (5:00 - 8:00 مساءً)
+            let beforeStart = new Date(year, month, i, 17, 0, 0);
+            let beforeEnd = new Date(year, month, i, 20, 0, 0);
+            scheduleTable.push({ 
+                date, 
+                personName: '⏳ لا يوجد سقيا', 
+                start: beforeStart, 
+                end: beforeEnd, 
+                isEmergency: false, 
+                isFilling: true,
+                isToday: isToday,
+                displayDuration: "3 ساعات" 
+            });
+            
+            // 2. الطوارئ (8:00 - 9:00 مساءً)
+            let emergencyStart = new Date(year, month, i, 20, 0, 0);
+            let emergencyEnd = new Date(year, month, i, 21, 0, 0);
+            scheduleTable.push({ 
+                date, 
+                personName: '🚨 طوارئ (ساعة واحدة)', 
+                start: emergencyStart, 
+                end: emergencyEnd, 
+                isEmergency: true, 
+                isFilling: false,
+                isToday: isToday,
+                displayDuration: "ساعة واحدة" 
+            });
+            
+            // 3. بعد الطوارئ (9:00 مساءً - 5:00 صباحاً)
+            let afterStart = new Date(year, month, i, 21, 0, 0);
+            let afterEnd = new Date(year, month, i + 1, 5, 0, 0);
+            scheduleTable.push({ 
+                date, 
+                personName: '⏳ لا يوجد سقيا', 
+                start: afterStart, 
+                end: afterEnd, 
+                isEmergency: false, 
+                isFilling: true,
+                isToday: isToday,
+                displayDuration: "8 ساعات" 
+            });
+            
+            // 4. تعبئة الخزان (5:00 صباحاً - 5:00 مساءً)
+            let fillStart = new Date(year, month, i + 1, 5, 0, 0);
+            let fillEnd = new Date(year, month, i + 1, 17, 0, 0);
+            scheduleTable.push({ 
+                date, 
+                personName: '🟢 تعبئة الخزان', 
+                start: fillStart, 
+                end: fillEnd, 
+                isEmergency: false, 
+                isFilling: true,
+                isToday: isToday,
+                displayDuration: "12 ساعة" 
+            });
+            
         } else {
-            // استخدام نفس الترتيب دائماً بغض النظر عن طول الشهر، مع بدء كل شهر من الأول
-            const personIndex = dayCounter % currentPeople.length;
-            personName = currentPeople[personIndex];
-            noteText = '';
-            dayCounter++;
+            // ============================================
+            //  الأيام العادية: 12 ساعة للجميع
+            // ============================================
+            
+            // 1. السقيا (5:00 مساءً - 5:00 صباحاً)
+            let nightStart = new Date(year, month, i, 17, 0, 0);
+            let nightEnd = new Date(year, month, i + 1, 5, 0, 0);
+            const currentPerson = currentPeople[personCounter % currentPeople.length];
+            
+            scheduleTable.push({ 
+                date, 
+                personName: `🌙 ${currentPerson}`, 
+                start: nightStart, 
+                end: nightEnd, 
+                isEmergency: false, 
+                isFilling: false,
+                isToday: isToday,
+                displayDuration: "12 ساعة" 
+            });
+            
+            personCounter++;
+            
+            // 2. تعبئة الخزان (5:00 صباحاً - 5:00 مساءً)
+            let fillStart = new Date(year, month, i + 1, 5, 0, 0);
+            let fillEnd = new Date(year, month, i + 1, 17, 0, 0);
+            
+            scheduleTable.push({ 
+                date, 
+                personName: '🟢 تعبئة الخزان', 
+                start: fillStart, 
+                end: fillEnd, 
+                isEmergency: false, 
+                isFilling: true,
+                isToday: isToday,
+                displayDuration: "12 ساعة" 
+            });
         }
-        
-        scheduleTable.push({ 
-            date, 
-            personName, 
-            start, 
-            end, 
-            note: noteText, 
-            isEmergency 
-        });
     }
 
-    // عرض الجدول في الصفحة
-    scheduleTable.forEach(entry => {
+    // عرض الجدول
+    const now = new Date();
+
+    scheduleTable.forEach((entry, index) => {
         const row = document.createElement('tr');
-        const nowDate = new Date();
+        const isCurrent = now >= entry.start && now < entry.end;
         
-        if (nowDate >= entry.start && nowDate < entry.end) {
-            row.classList.add('selected');
-            currentSchedule = entry;
+        // ============================================
+        //  إضافة class "today-row" لليوم الحالي
+        // ============================================
+        if (entry.isToday) {
+            row.classList.add('today-row');
         }
-        if (nowDate > entry.end) {
-            row.classList.add('past');
+        
+        if (isCurrent) { 
+            row.classList.add('selected'); 
+            currentSchedule = entry; 
         }
-        if (entry.isEmergency) {
-            row.classList.add('emergency');
+        if (now > entry.end) row.classList.add('past');
+        if (entry.isEmergency) row.classList.add('emergency');
+        if (entry.isFilling && !entry.personName.includes('لا يوجد سقيا')) {
+            row.classList.add('fill-period');
         }
+        
+        let nameDisplay = entry.personName;
+        let durationDisplay = entry.displayDuration;
+        
+        // إضافة أيقونة اليوم الحالي
+        let todayIcon = entry.isToday ? ' 🔵' : '';
         
         row.innerHTML = `
             <td>${getDayName(entry.date)}</td>
-            <td>${entry.date.toLocaleDateString('ar-EG', { month: 'long', day: 'numeric' })}</td>
-            <td>
-                ${entry.personName}
-            </td>
-            <td>
-                ${entry.note}
-                <button class="detail-btn" onclick="showDetails('${entry.personName}', '${entry.start.toISOString()}', '${entry.end.toISOString()}', '${entry.note}', ${entry.isEmergency})">تفاصيل</button>
-            </td>`;
+            <td>${entry.date.toLocaleDateString('ar-EG', { month: 'long', day: 'numeric' })}${todayIcon}</td>
+            <td>${isCurrent ? '<span class="active-indicator"></span>' : ''} ${nameDisplay}</td>
+            <td>${durationDisplay}</td>
+            <td><button class="detail-btn" onclick="showDetails('${nameDisplay}', '${entry.start.toISOString()}', '${entry.end.toISOString()}')">تفاصيل</button></td>
+        `;
         
         tbody.appendChild(row);
     });
@@ -1112,98 +729,111 @@ function generateSchedule() {
     updateCurrentSchedule();
 }
 
+// ============================================================
+//  تحديث الشخص الحالي
+// ============================================================
 function updateCurrentSchedule() {
     const now = new Date();
     const cs = scheduleTable.find(e => now >= e.start && now < e.end);
     currentSchedule = cs || null;
     
     nextSchedule = null;
-    if (scheduleTable.length > 0) {
-        for (let i = 0; i < scheduleTable.length; i++) {
-            if (now < scheduleTable[i].start) {
-                nextSchedule = scheduleTable[i];
-                break;
-            }
+    for (let i = 0; i < scheduleTable.length; i++) {
+        if (now < scheduleTable[i].start) { 
+            nextSchedule = scheduleTable[i]; 
+            break; 
         }
     }
     
-    const currentPersonName = cs ? cs.personName : "لا يوجد سَقْيَة الآن";
-    document.getElementById('currentPerson').textContent = currentPersonName;
-    
-    // تحديث علامة النبض الخضراء في الجدول
-    updateActiveIndicator();
-    
-    // التحقق من صلاحية عرض مستوى الماء عند تحديث الجدول
-    checkWaterLevelAccess();
-}
-
-// دالة لتحديث المؤشر النابض في الجدول
-function updateActiveIndicator() {
-    // إزالة جميع المؤشرات السابقة
-    const allIndicators = document.querySelectorAll('.active-indicator');
-    allIndicators.forEach(indicator => indicator.remove());
-    
-    // إضافة مؤشر للصف المحدد (الشخص الذي يستقي حالياً)
-    const selectedRows = document.querySelectorAll('tr.selected');
-    selectedRows.forEach(row => {
-        const nameCell = row.querySelector('td:nth-child(3)');
-        if (nameCell) {
-            // إنشاء المؤشر النابض
-            const indicator = document.createElement('span');
-            indicator.className = 'active-indicator';
-            indicator.title = 'يستقي حالياً';
-            
-            // إضافة المؤشر في بداية اسم الشخص
-            const currentName = nameCell.textContent.trim();
-            nameCell.innerHTML = '';
-            nameCell.appendChild(indicator);
-            nameCell.appendChild(document.createTextNode(` ${currentName}`));
+    if (cs) {
+        if (cs.isEmergency) {
+            document.getElementById('currentPerson').textContent = '🚨 طوارئ (ساعة واحدة)';
+            checkWaterLevelAccess(null, false);
+        } else if (cs.isFilling) {
+            document.getElementById('currentPerson').textContent = cs.personName;
+            checkWaterLevelAccess(null, true);
+        } else {
+            document.getElementById('currentPerson').textContent = cs.personName.replace('🌙 ', '');
+            checkWaterLevelAccess(cs.personName.replace('🌙 ', ''), false);
         }
-    });
+    } else {
+        document.getElementById('currentPerson').textContent = "لا يوجد فترة نشطة";
+        checkWaterLevelAccess(null, false);
+    }
 }
 
-// دالة لإضافة التنبيه إلى تقويم جوجل
-function addGoogleCalendarReminder(eventDetails) {
-    // وقت التنبيه (10 دقائق قبل بدء السقاية)
-    const reminderTime = new Date(eventDetails.startTime);
-    reminderTime.setMinutes(reminderTime.getMinutes() - 10);
+// ============================================================
+//  التحكم في عرض مستوى الماء
+// ============================================================
+function checkWaterLevelAccess(personName, isFillingTime) {
+    const authContent = document.getElementById('authorizedWaterContent');
+    const fillingContent = document.getElementById('fillingWaterContent');
+    const unauthContent = document.getElementById('unauthorizedWaterContent');
     
-    // تنسيق التواريخ لرابط جوجل كالندر
-    const formatDateForGoogle = (date) => {
-        return date.toISOString().replace(/-|:|\.\d+/g, '');
-    };
-    
-    // إنشاء تفاصيل الحدث
-    const eventTitle = `سَقْيَة: ${eventDetails.personName}`;
-    const eventDescription = `سَقْيَة الماء - ${eventDetails.personName}\n\n` +
-                            `تاريخ: ${eventDetails.dateString}\n` +
-                            `وقت البدء: ${eventDetails.startTimeString}\n` +
-                            `وقت الانتهاء: ${eventDetails.endTimeString}\n` +
-                            `الحالة: ${eventDetails.status}\n` +
-                            `ملاحظات: ${eventDetails.note || "لا توجد"}\n\n` +
-                            `(تمت الإضافة من موقع جدول السقاية)`;
-    
-    // إنشاء رابط جوجل كالندر
-    const googleCalendarUrl = 'https://calendar.google.com/calendar/render?' +
-        'action=TEMPLATE&' +
-        'text=' + encodeURIComponent(eventTitle) + '&' +
-        'details=' + encodeURIComponent(eventDescription) + '&' +
-        'dates=' + formatDateForGoogle(eventDetails.startTime) + '/' + formatDateForGoogle(eventDetails.endTime) + '&' +
-        'reminder=10&' + // تنبيه قبل 10 دقائق
-        'reminder=1440&' + // تنبيه قبل يوم واحد (اختياري)
-        'location=' + encodeURIComponent('موقع السقاية') + '&' +
-        'trp=false&' +
-        'sprop=' + encodeURIComponent('name:جدول السقاية') + '&' +
-        'sprop=name:' + encodeURIComponent(window.location.href);
-    
-    // فتح الرابط في نافذة جديدة
-    window.open(googleCalendarUrl, '_blank', 'width=800,height=600');
-    
-    // عرض رسالة تأكيد
-    showTemporaryMessage(`📅 تم فتح صفحة إضافة حدث إلى تقويم جوجل`, 4000);
+    if (isFillingTime) {
+        authContent.style.display = 'none';
+        fillingContent.style.display = 'block';
+        unauthContent.style.display = 'none';
+    } else if (personName && AUTHORIZED_FOR_WATER_LEVEL.includes(personName.trim())) {
+        authContent.style.display = 'block';
+        fillingContent.style.display = 'none';
+        unauthContent.style.display = 'none';
+        refreshWaterData();
+    } else {
+        authContent.style.display = 'none';
+        fillingContent.style.display = 'none';
+        unauthContent.style.display = 'block';
+    }
 }
 
-function showDetails(name, start, end, note, isEmergency) {
+// ============================================================
+//  بيانات الماء
+// ============================================================
+async function fetchWaterData() {
+    try {
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxppOlRtEYur9rESbp-9VWqm7JYxPe1TvAv4RzQCtlHsimI76xcKH_93AzwCEuhj8AK/exec';
+        const response = await fetch(`${SCRIPT_URL}?operation=getLatest&t=${Date.now()}`);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.status === 'success') { 
+                updateWaterDisplay(data.data); 
+                return; 
+            }
+        }
+        updateWaterDisplay(generateMockData());
+    } catch (error) {
+        updateWaterDisplay(generateMockData());
+    }
+}
+
+function generateMockData() {
+    const distance = Math.floor(Math.random() * 200) + 100;
+    const waterHeight = TANK_CONFIG.height - distance;
+    const volume = waterHeight > 0 ? (Math.PI * Math.pow((TANK_CONFIG.diameter / 2), 2) * waterHeight) / 1000 : 0;
+    return { level: (volume / totalTankVolume) * 100, distance, strength: 410 };
+}
+
+function updateWaterDisplay(data) {
+    let pct = Math.min(Math.max(parseFloat(data.level || 0), 0), 100);
+    let vol = (pct / 100) * totalTankVolume;
+    let dist = TANK_CONFIG.height - (pct / 100) * TANK_CONFIG.height;
+    
+    document.getElementById('waterLevel').style.height = pct + '%';
+    document.getElementById('percentDisplay').textContent = pct.toFixed(1) + '%';
+    document.getElementById('litersDisplay').textContent = Math.round(vol).toLocaleString() + ' لتر';
+    document.getElementById('signalStrength').textContent = data.strength || '0';
+    document.getElementById('distanceDisplay').textContent = dist.toFixed(1) + ' سم';
+    document.getElementById('lastUpdateTime').textContent = new Date().toLocaleTimeString('ar-SA');
+}
+
+function refreshWaterData() { 
+    fetchWaterData(); 
+}
+
+// ============================================================
+//  تفاصيل الفترة
+// ============================================================
+function showDetails(name, start, end) {
     const startDate = new Date(start);
     const endDate = new Date(end);
     const now = new Date();
@@ -1213,105 +843,63 @@ function showDetails(name, start, end, note, isEmergency) {
     document.getElementById('modalStart').textContent = formatDateTimeFull(startDate);
     document.getElementById('modalEnd').textContent = formatDateTimeFull(endDate);
     
-    let status = '';
-    if (now < startDate) {
-        status = 'لم تبدأ بعد';
-    } else if (now >= startDate && now < endDate) {
-        status = 'يستقي الان';
-    } else {
-        status = 'انتهت';
-    }
-    
+    let status = now < startDate ? 'لم تبدأ بعد' : (now >= startDate && now < endDate ? '🟢 نشط الآن' : '✅ انتهت');
     document.getElementById('modalStatus').textContent = status;
-    document.getElementById('modalNote').textContent = note || "لا توجد ملاحظات";
     document.getElementById('detailsModal').style.display = 'flex';
     
-    // حفظ بيانات النافذة للاستخدام في زر التنبيه
-    currentModalData = {
-        personName: name,
-        dateString: formatDateFull(startDate),
-        startTimeString: formatDateTimeFull(startDate),
-        endTimeString: formatDateTimeFull(endDate),
-        startTime: startDate,
-        endTime: endDate,
-        status: status,
-        note: note || "لا توجد ملاحظات",
-        isEmergency: isEmergency
-    };
-    
-    // تعيين حدث لزر إضافة التنبيه
-    document.getElementById('addReminderBtn').onclick = function() {
-        if (currentModalData) {
-            addGoogleCalendarReminder(currentModalData);
-        }
-    };
+    currentModalData = { personName: name, startTime: startDate, endTime: endDate };
 }
 
-// إغلاق النافذة المنبثقة
-document.getElementById('closeModal').onclick = function() {
+document.getElementById('closeModal').onclick = () => {
     document.getElementById('detailsModal').style.display = 'none';
-    currentModalData = null;
-}
+};
 
-// إغلاق النافذة عند النقر خارجها
-window.onclick = function(event) {
-    const modal = document.getElementById('detailsModal');
-    if (event.target == modal) {
-        modal.style.display = 'none';
-        currentModalData = null;
-    }
-}
+document.getElementById('addReminderBtn').onclick = () => {
+    if (!currentModalData) return;
+    const formatDateForGoogle = (d) => d.toISOString().replace(/-|:|\.\d+/g, '');
+    const gUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(currentModalData.personName)}&dates=${formatDateForGoogle(currentModalData.startTime)}/${formatDateForGoogle(currentModalData.endTime)}`;
+    window.open(gUrl, '_blank');
+};
 
+// ============================================================
+//  العد التنازلي
+// ============================================================
 function updateRemainingTime() {
     const now = new Date();
     updateCurrentSchedule();
+    let target = currentSchedule ? currentSchedule.end : (nextSchedule ? nextSchedule.start : null);
     
-    if (!nextSchedule) {
-        document.getElementById('timer-text').textContent = "--:--:--";
-        document.querySelector('.countdown-circle').style.background = `conic-gradient(var(--primary-color) 0%, transparent 0%)`;
-        return;
+    if (!target) { 
+        document.getElementById('timer-text').textContent = "--:--:--"; 
+        return; 
     }
     
-    const diff = nextSchedule.start - now;
-    
-    if (diff <= 0) {
-        document.getElementById('timer-text').textContent = "00:00:00";
-        document.querySelector('.countdown-circle').style.background = `conic-gradient(var(--primary-color) 100%, transparent 100%)`;
-        generateSchedule();
-        return;
+    const diff = target - now;
+    if (diff <= 0) { 
+        generateSchedule(); 
+        return; 
     }
     
-    const hours = Math.floor(diff / 1000 / 60 / 60);
-    const minutes = Math.floor((diff / 1000 / 60) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
+    const hours = Math.floor(diff / 3600000).toString().padStart(2, '0');
+    const minutes = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
+    const seconds = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
     
-    document.getElementById('timer-text').textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    document.getElementById('timer-text').textContent = `${hours}:${minutes}:${seconds}`;
     
-    const totalDuration = nextSchedule.start - (new Date(nextSchedule.start.getFullYear(), nextSchedule.start.getMonth(), nextSchedule.start.getDate(), 0, 0, 0));
-    const percentage = 100 - (diff / totalDuration) * 100;
-    const adjustedPercentage = Math.min(Math.max(percentage, 0), 100);
-    
-    document.querySelector('.countdown-circle').style.background = `conic-gradient(var(--primary-color) ${adjustedPercentage}%, transparent ${adjustedPercentage}%)`;
+    let totalPeriodDuration = currentSchedule ? (currentSchedule.end - currentSchedule.start) : 43200000;
+    const pct = 100 - (diff / totalPeriodDuration) * 100;
+    document.querySelector('.countdown-circle').style.background = 
+        `conic-gradient(var(--primary-color) ${Math.min(pct, 100)}%, transparent ${Math.min(pct, 100)}%)`;
 }
 
-// تهيئة الصفحة
+// ============================================================
+//  تشغيل
+// ============================================================
 window.onload = function() {
-    // تهيئة عرض مستوى الماء
-    initializeWaterDisplay();
-    
-    // تهيئة جدول السقاية
+    document.getElementById('totalCapacity').textContent = Math.round(totalTankVolume).toLocaleString() + ' لتر';
     generateSchedule();
-    updateRemainingTime();
     setInterval(updateRemainingTime, 1000);
-    setInterval(generateSchedule, 60 * 60 * 1000);
-    
-    // التحقق الأولي من صلاحية عرض مستوى الماء
-    setTimeout(() => {
-        checkWaterLevelAccess();
-    }, 500);
 }
 </script>
-
 </body>
 </html>
-
